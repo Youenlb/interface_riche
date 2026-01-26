@@ -35,11 +35,11 @@ export interface POIScene {
 
 export interface POIEntry {
   id: number;
-  title_fr: string;
+  title_fr: string; // ou "title" selon ton JSON exact, adapte si besoin
   latitude: number;
   longitude: number;
   description_fr: string;
-  timestamps: POIScene[]; // Liste des scènes liées à ce lieu
+  timestamps?: POIScene[]; // <--- LE ? EST CRUCIAL ICI
 }
 
 export interface FilmData {
