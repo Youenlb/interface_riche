@@ -1,35 +1,51 @@
-export interface FilmData {
-  film: {
-    file_url: string;
-    title: string;
-    synopsis_url: string;
-  };
-  subtitles: {
-    en: string;
-    fr: string;
-    es: string;
-  };
-  "audio-description": string; // URL du JSON
-  chapters: string; // URL du JSON
-  poi: string; // URL du JSON
-}
+// app/types.ts
 
-// Structure supposée pour le fichier JSON de description audio
-export interface AudioDescCue {
-  time: number; // timestamp en secondes
-  text: string; // texte à lire
-}
-
-// Structure supposée pour les chapitres
-export interface Chapter {
-  pos: number;
+export interface FilmInfo {
+  file_url: string;
   title: string;
-  time: number; 
+  synopsis_url: string;
 }
 
-// Structure pour les Points d'Intérêt (POI)
-export interface POI {
-  label: string;
-  pos: string; // "lat, lng"
-  time: number;
+export interface Subtitles {
+  en: string;
+  fr: string;
+  es: string;
+}
+
+export interface AudioDescEntry {
+  scene: number;
+  timestamp: string; // "HH:MM:SS"
+  description: string;
+  description_fr?: string; // Optionnel car le 1er item n'en avait pas dans ton exemple, mais on va gérer
+  description_es?: string;
+}
+
+export interface ChapterEntry {
+  chapter: number;
+  timestamp: string;
+  title: string;
+  title_fr: string;
+  description_fr: string;
+}
+
+export interface POIScene {
+  time: string;
+  scene_fr: string;
+}
+
+export interface POIEntry {
+  id: number;
+  title_fr: string;
+  latitude: number;
+  longitude: number;
+  description_fr: string;
+  timestamps: POIScene[]; // Liste des scènes liées à ce lieu
+}
+
+export interface FilmData {
+  film: FilmInfo;
+  subtitles: Subtitles;
+  audiodescription: AudioDescEntry[];
+  chapters: ChapterEntry[];
+  poi: POIEntry[];
 }

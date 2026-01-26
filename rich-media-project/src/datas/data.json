@@ -1,0 +1,541 @@
+{
+    "film":{
+        "file_url":"https://upload.wikimedia.org/wikipedia/commons/2/24/Night_of_the_Living_Dead_%281968%29.webm",
+        "title": "Night of the Living Dead",
+        "synopsis_url": "https://en.wikipedia.org/wiki/Night_of_the_Living_Dead"
+    },
+    "subtitles":{
+        "en":"../subtitles/subtitles-en.srt",
+        "fr":"../subtitles/subtitles-fr.srt",
+        "es":"../subtitles/subtitles-es.srt"
+    },
+    "audiodescription":[
+    {
+      "scene": 1,
+      "timestamp": "00:00:00",
+      "description": "Black and white film. Opening credits appear over a winding country road. A car drives through rural Pennsylvania countryside."
+    },
+    {
+      "scene": 2,
+      "timestamp": "00:02:15",
+      "description": "A young woman, Barbara, and her brother Johnny arrive at a remote cemetery. They walk among weathered gravestones."
+    },
+    {
+      "scene": 3,
+      "timestamp": "00:03:45",
+      "description": "Johnny teases Barbara playfully. A strange figure lurches toward them in the distance."
+    },
+    {
+      "scene": 4,
+      "timestamp": "00:05:20",
+      "description": "The pale-faced man attacks. Johnny tries to fight him off but is thrown against a gravestone, hitting his head. He lies motionless."
+    },
+    {
+      "scene": 5,
+      "timestamp": "00:06:30",
+      "description": "Barbara runs to the car, frantically searching for keys. The ghoul approaches. She releases the brake and the car rolls downhill, crashing into a tree."
+    },
+    {
+      "scene": 6,
+      "timestamp": "00:08:00",
+      "description": "Barbara flees through fields and woods. She's disheveled, breathing heavily, looking back in terror."
+    },
+    {
+      "scene": 7,
+      "timestamp": "00:09:30",
+      "description": "Barbara reaches an isolated two-story farmhouse. She cautiously enters through the front door. The house is dark and eerily quiet."
+    },
+    {
+      "scene": 8,
+      "timestamp": "00:11:45",
+      "description": "Barbara explores the house. She finds a woman's body at the top of the stairs, partially eaten. Barbara screams and backs away in horror."
+    },
+    {
+      "scene": 9,
+      "timestamp": "00:13:00",
+      "description": "A truck arrives. A young Black man, Ben, runs to the house. He's authoritative and focused, immediately assessing the situation."
+    },
+    {
+      "scene": 10,
+      "timestamp": "00:14:30",
+      "description": "Ben fights off ghouls at the door, using a tire iron as a weapon. He drags the corpse from the stairs and throws it outside."
+    },
+    {
+      "scene": 11,
+      "timestamp": "00:16:00",
+      "description": "Ben begins barricading windows and doors with wooden planks. Barbara sits in shock, staring blankly, unresponsive."
+    },
+    {
+      "scene": 12,
+      "timestamp": "00:18:30",
+      "description": "Ben hammers boards across windows. Outside, more shadowy figures gather in the darkness around the house."
+    },
+    {
+      "scene": 13,
+      "timestamp": "00:20:00",
+      "description": "Ben turns on a radio. He listens intently while continuing to fortify the house."
+    },
+    {
+      "scene": 14,
+      "timestamp": "00:23:30",
+      "description": "Ben finds a television set and gets it working. Black and white footage shows news anchors and officials at desks."
+    },
+    {
+      "scene": 15,
+      "timestamp": "00:26:00",
+      "description": "On TV, scientists in lab coats examine documents. Footage shows police and military personnel. More ghouls gather outside the farmhouse windows."
+    },
+    {
+      "scene": 16,
+      "timestamp": "00:32:00",
+      "description": "A cellar door in the floor opens. Harry Cooper, a middle-aged man, emerges looking angry and defensive."
+    },
+    {
+      "scene": 17,
+      "timestamp": "00:33:30",
+      "description": "Harry's wife Helen, a tired-looking woman, climbs up from the cellar. Young couple Tom and Judy follow. They look frightened.",
+      "description_fr": "La femme de Harry, Helen, une femme à l'air fatigué, monte de la cave. Le jeune couple Tom et Judy suit. Ils ont l'air effrayés.",
+      "description_es": "La esposa de Harry, Helen, una mujer de aspecto cansado, sube del sótano. La joven pareja Tom y Judy los siguen. Parecen asustados."
+    },
+    {
+      "scene": 18,
+      "timestamp": "00:36:00",
+      "description": "Ben and Harry argue, pointing fingers at each other. Harry gestures toward the cellar. Ben points to the boarded windows.",
+      "description_fr": "Ben et Harry se disputent, se pointant du doigt. Harry fait des gestes vers la cave. Ben pointe vers les fenêtres barricadées.",
+      "description_es": "Ben y Harry discuten, señalándose el uno al otro. Harry gesticula hacia el sótano. Ben señala las ventanas tapiadas."
+    },
+    {
+      "scene": 19,
+      "timestamp": "00:40:00",
+      "description": "The group watches television together. Maps and charts appear on screen showing affected areas.",
+      "description_fr": "Le groupe regarde la télévision ensemble. Des cartes et des graphiques apparaissent à l'écran montrant les zones touchées.",
+      "description_es": "El grupo mira televisión juntos. Mapas y gráficos aparecen en la pantalla mostrando las áreas afectadas."
+    },
+    {
+      "scene": 20,
+      "timestamp": "00:45:00",
+      "description": "On TV, officials point to maps indicating rescue stations. Ben takes notes, planning their escape route.",
+      "description_fr": "À la télé, des officiels pointent vers des cartes indiquant des centres de secours. Ben prend des notes, planifiant leur route d'évacuation.",
+      "description_es": "En la televisión, funcionarios señalan mapas indicando estaciones de rescate. Ben toma notas, planificando su ruta de escape."
+    },
+    {
+      "scene": 21,
+      "timestamp": "00:48:00",
+      "description": "The group gathers around a table. Ben draws a diagram showing the truck and gas pump outside.",
+      "description_fr": "Le groupe se rassemble autour d'une table. Ben dessine un diagramme montrant le camion et la pompe à essence dehors.",
+      "description_es": "El grupo se reúne alrededor de una mesa. Ben dibuja un diagrama mostrando la camioneta y el surtidor de gasolina afuera."
+    },
+    {
+      "scene": 22,
+      "timestamp": "00:52:00",
+      "description": "Tom and Judy hold hands nervously. Harry shakes his head in disagreement. Helen looks worried, glancing toward the cellar.",
+      "description_fr": "Tom et Judy se tiennent la main nerveusement. Harry secoue la tête en signe de désaccord. Helen a l'air inquiète, jetant un coup d'œil vers la cave.",
+      "description_es": "Tom y Judy se toman de las manos nerviosamente. Harry niega con la cabeza en desacuerdo. Helen parece preocupada, mirando hacia el sótano."
+    },
+    {
+      "scene": 23,
+      "timestamp": "00:56:00",
+      "description": "Ben, Tom, and Judy run outside toward the truck. Ghouls close in from all sides. Ben carries torches to keep them at bay.",
+      "description_fr": "Ben, Tom et Judy courent dehors vers le camion. Les goules s'approchent de tous côtés. Ben porte des torches pour les tenir à distance.",
+      "description_es": "Ben, Tom y Judy corren afuera hacia la camioneta. Los necrófagos se acercan desde todos lados. Ben lleva antorchas para mantenerlos a raya."
+    },
+    {
+      "scene": 24,
+      "timestamp": "00:58:30",
+      "description": "Tom struggles with the gas pump nozzle. It's stuck. Judy watches anxiously from the truck. Ghouls move closer through the darkness.",
+      "description_fr": "Tom lutte avec la buse de la pompe à essence. Elle est coincée. Judy observe anxieusement depuis le camion. Les goules se rapprochent dans l'obscurité.",
+      "description_es": "Tom lucha con la boquilla del surtidor de gasolina. Está atascada. Judy observa ansiosamente desde la camioneta. Los necrófagos se acercan a través de la oscuridad."
+    },
+    {
+      "scene": 25,
+      "timestamp": "01:00:15",
+      "description": "The truck catches fire. Tom and Judy are trapped inside. A massive explosion engulfs the vehicle. Ben shields his face from the blast.",
+      "description_fr": "Le camion prend feu. Tom et Judy sont piégés à l'intérieur. Une explosion massive engloutit le véhicule. Ben se protège le visage de l'explosion.",
+      "description_es": "La camioneta se incendia. Tom y Judy están atrapados adentro. Una explosión masiva envuelve el vehículo. Ben protege su rostro de la explosión."
+    },
+    {
+      "scene": 26,
+      "timestamp": "01:02:00",
+      "description": "Ghouls approach the burning wreckage and begin feeding on the bodies. Ben fights his way back to the house with a torch.",
+      "description_fr": "Les goules s'approchent de l'épave en flammes et commencent à se nourrir des corps. Ben se fraie un chemin vers la maison avec une torche.",
+      "description_es": "Los necrófagos se acercan a los restos en llamas y comienzan a alimentarse de los cuerpos. Ben lucha para regresar a la casa con una antorcha."
+    },
+    {
+      "scene": 27,
+      "timestamp": "01:05:00",
+      "description": "Ben bursts back into the house, breathing heavily. Harry tries to lock him out but Ben forces the door open.",
+      "description_fr": "Ben entre en trombe dans la maison, respirant lourdement. Harry essaie de l'enfermer dehors mais Ben force la porte.",
+      "description_es": "Ben irrumpe de nuevo en la casa, respirando pesadamente. Harry intenta dejarlo afuera pero Ben fuerza la puerta."
+    },
+    {
+      "scene": 28,
+      "timestamp": "01:07:00",
+      "description": "Ben and Harry fight. Ben punches Harry repeatedly. Harry stumbles backward, defeated.",
+      "description_fr": "Ben et Harry se battent. Ben frappe Harry à plusieurs reprises. Harry recule en titubant, vaincu.",
+      "description_es": "Ben y Harry pelean. Ben golpea a Harry repetidamente. Harry retrocede tambaleándose, derrotado."
+    },
+    {
+      "scene": 29,
+      "timestamp": "01:10:00",
+      "description": "In the cellar, young Karen lies on a makeshift bed, pale and still. Helen checks on her daughter, looking increasingly worried.",
+      "description_fr": "Dans la cave, la jeune Karen est allongée sur un lit de fortune, pâle et immobile. Helen vérifie l'état de sa fille, l'air de plus en plus inquiète.",
+      "description_es": "En el sótano, la joven Karen yace en una cama improvisada, pálida e inmóvil. Helen revisa a su hija, luciendo cada vez más preocupada."
+    },
+    {
+      "scene": 30,
+      "timestamp": "01:13:00",
+      "description": "Ghouls break through the barricaded windows. Arms reach through gaps in the boards. Ben struggles to hold them back.",
+      "description_fr": "Les goules percent les fenêtres barricadées. Des bras passent à travers les fentes des planches. Ben lutte pour les repousser.",
+      "description_es": "Los necrófagos rompen las ventanas tapiadas. Brazos se extienden a través de las grietas en las tablas. Ben lucha para contenerlos."
+    },
+    {
+      "scene": 31,
+      "timestamp": "01:15:30",
+      "description": "Barbara sees her brother Johnny among the ghouls. He reaches for her through the broken window. Other ghouls grab Barbara and drag her outside.",
+      "description_fr": "Barbara voit son frère Johnny parmi les goules. Il tend la main vers elle à travers la fenêtre brisée. D'autres goules attrapent Barbara et la traînent dehors.",
+      "description_es": "Barbara ve a su hermano Johnny entre los necrófagos. Él extiende la mano hacia ella a través de la ventana rota. Otros necrófagos agarran a Barbara y la arrastran afuera."
+    },
+    {
+      "scene": 32,
+      "timestamp": "01:17:00",
+      "description": "In the cellar, Karen sits up slowly. Her eyes are vacant. She picks up a trowel and approaches her mother from behind.",
+      "description_fr": "Dans la cave, Karen se redresse lentement. Ses yeux sont vides. Elle prend une truelle et s'approche de sa mère par derrière.",
+      "description_es": "En el sótano, Karen se incorpora lentamente. Sus ojos están vacíos. Toma una paleta y se acerca a su madre por detrás."
+    },
+    {
+      "scene": 33,
+      "timestamp": "01:18:30",
+      "description": "Karen repeatedly stabs Helen with the trowel. Helen collapses. Karen leans down and begins eating her mother's body.",
+      "description_fr": "Karen poignarde Helen à plusieurs reprises avec la truelle. Helen s'effondre. Karen se penche et commence à dévorer le corps de sa mère.",
+      "description_es": "Karen apuñala repetidamente a Helen con la paleta. Helen colapsa. Karen se inclina y comienza a comer el cuerpo de su madre."
+    },
+    {
+      "scene": 34,
+      "timestamp": "01:20:00",
+      "description": "Harry, wounded, crawls toward the cellar. Ben shoots him. Harry falls down the cellar stairs.",
+      "description_fr": "Harry, blessé, rampe vers la cave. Ben lui tire dessus. Harry tombe dans les escaliers de la cave.",
+      "description_es": "Harry, herido, se arrastra hacia el sótano. Ben le dispara. Harry cae por las escaleras del sótano."
+    },
+    {
+      "scene": 35,
+      "timestamp": "01:22:00",
+      "description": "Ghouls pour into the house through broken doors and windows. Ben retreats down into the cellar and barricades himself inside.",
+      "description_fr": "Les goules envahissent la maison par les portes et fenêtres brisées. Ben descend dans la cave et se barricade à l'intérieur.",
+      "description_es": "Los necrófagos invaden la casa a través de puertas y ventanas rotas. Ben se retira al sótano y se atrinchera adentro."
+    },
+    {
+      "scene": 36,
+      "timestamp": "01:25:00",
+      "description": "Dawn breaks. Sunlight streams through the farmhouse windows. Outside, armed men with rifles and dogs move through the countryside.",
+      "description_fr": "L'aube se lève. La lumière du soleil traverse les fenêtres de la ferme. Dehors, des hommes armés de fusils et de chiens traversent la campagne.",
+      "description_es": "Amanece. La luz del sol entra por las ventanas de la granja. Afuera, hombres armados con rifles y perros se mueven por el campo."
+    },
+    {
+      "scene": 37,
+      "timestamp": "01:27:00",
+      "description": "A posse of men systematically shoot ghouls in the head. They throw bodies onto a burning pyre. Dogs attack remaining ghouls.",
+      "description_fr": "Une milice d'hommes tire systématiquement sur les goules dans la tête. Ils jettent les corps sur un bûcher en flammes. Les chiens attaquent les goules restantes.",
+      "description_es": "Un grupo de hombres dispara sistemáticamente a los necrófagos en la cabeza. Arrojan cuerpos a una pira ardiente. Los perros atacan a los necrófagos restantes."
+    },
+    {
+      "scene": 38,
+      "timestamp": "01:29:00",
+      "description": "Ben cautiously emerges from the cellar and looks out a window. A rifleman sees movement and fires. Ben is shot in the head.",
+      "description_fr": "Ben sort prudemment de la cave et regarde par une fenêtre. Un tireur voit un mouvement et tire. Ben est touché à la tête.",
+      "description_es": "Ben emerge cautelosamente del sótano y mira por una ventana. Un fusilero ve movimiento y dispara. Ben recibe un disparo en la cabeza."
+    },
+    {
+      "scene": 39,
+      "timestamp": "01:30:00",
+      "description": "Men drag Ben's body out with meat hooks. They throw it onto the burning pile with the ghouls. Still photographs show the grim cleanup.",
+      "description_fr": "Des hommes traînent le corps de Ben avec des crochets à viande. Ils le jettent sur le tas en flammes avec les goules. Des photographies fixes montrent le nettoyage sinistre.",
+      "description_es": "Los hombres arrastran el cuerpo de Ben con ganchos de carne. Lo arrojan a la pila ardiente con los necrófagos. Fotografías fijas muestran la sombría limpieza."
+    },
+    {
+      "scene": 40,
+      "timestamp": "01:31:30",
+      "description": "End credits roll over black and white photographs of bodies being burned and the posse standing around the flames.",
+      "description_fr": "Le générique de fin défile sur des photographies en noir et blanc de corps brûlés et de la milice debout autour des flammes.",
+      "description_es": "Los créditos finales pasan sobre fotografías en blanco y negro de cuerpos siendo quemados y el grupo de pie alrededor de las llamas."
+    }
+  ],
+  "chapters":[
+    {
+      "chapter": 1,
+      "timestamp": "00:00:00",
+      "title": "The Cemetery",
+      "title_fr": "Le Cimetière",
+      "title_es": "El Cementerio",
+      "description": "Barbara and Johnny visit their father's grave in a remote Pennsylvania cemetery. Their casual bickering turns to terror when they encounter a strange man who attacks them, leading to Johnny's death and Barbara's desperate flight.",
+      "description_fr": "Barbara et Johnny visitent la tombe de leur père dans un cimetière isolé de Pennsylvanie. Leur chamaillerie décontractée se transforme en terreur lorsqu'ils rencontrent un homme étrange qui les attaque, conduisant à la mort de Johnny et à la fuite désespérée de Barbara.",
+      "description_es": "Barbara y Johnny visitan la tumba de su padre en un cementerio remoto de Pensilvania. Su discusión casual se convierte en terror cuando encuentran a un hombre extraño que los ataca, lo que lleva a la muerte de Johnny y a la huida desesperada de Barbara."
+    },
+    {
+      "chapter": 2,
+      "timestamp": "00:09:30",
+      "title": "The Farmhouse",
+      "title_fr": "La Ferme",
+      "title_es": "La Granja",
+      "description": "Barbara reaches an isolated farmhouse and seeks refuge inside. Soon after, Ben arrives and takes charge, fighting off the ghouls and attempting to secure the house.",
+      "description_fr": "Barbara atteint une ferme isolée et cherche refuge à l'intérieur. Peu après, Ben arrive et prend le contrôle, repoussant les goules et tentant de sécuriser la maison.",
+      "description_es": "Barbara llega a una granja aislada y busca refugio en su interior. Poco después, Ben llega y toma el control, luchando contra los necrófagos e intentando asegurar la casa."
+    },
+    {
+      "chapter": 3,
+      "timestamp": "00:20:00",
+      "title": "Barricading and News Reports",
+      "title_fr": "Barricades et Bulletins d'Information",
+      "title_es": "Barricadas y Reportes de Noticias",
+      "description": "Ben boards up the farmhouse while radio and television broadcasts reveal a growing crisis involving the dead returning to life.",
+      "description_fr": "Ben barricade la ferme pendant que la radio et la télévision révèlent une crise grandissante impliquant des morts revenus à la vie.",
+      "description_es": "Ben refuerza la granja mientras transmisiones de radio y televisión revelan una crisis creciente con los muertos regresando a la vida."
+    },
+    {
+      "chapter": 4,
+      "timestamp": "00:32:00",
+      "title": "The Cellar Dwellers Revealed",
+      "title_fr": "Les Occupants de la Cave",
+      "title_es": "Los Habitantes del Sótano",
+      "description": "Harry Cooper and his family emerge from the cellar. Tensions rise immediately as Harry and Ben disagree on how to survive the siege.",
+      "description_fr": "Harry Cooper et sa famille émergent de la cave. Les tensions montent immédiatement lorsque Harry et Ben s'opposent sur la manière de survivre au siège.",
+      "description_es": "Harry Cooper y su familia salen del sótano. Las tensiones aumentan de inmediato cuando Harry y Ben discrepan sobre cómo sobrevivir al asedio."
+    },
+    {
+      "chapter": 5,
+      "timestamp": "00:45:00",
+      "title": "The Plan",
+      "title_fr": "Le Plan",
+      "title_es": "El Plan",
+      "description": "After watching news reports about rescue stations, Ben devises a plan to refuel the truck and escape the farmhouse.",
+      "description_fr": "Après avoir regardé les informations sur les centres de secours, Ben élabore un plan pour faire le plein du camion et fuir la ferme.",
+      "description_es": "Después de ver informes sobre estaciones de rescate, Ben diseña un plan para repostar la camioneta y escapar de la granja."
+    },
+    {
+      "chapter": 6,
+      "timestamp": "00:56:00",
+      "title": "The Truck Disaster",
+      "title_fr": "Le Désastre du Camion",
+      "title_es": "El Desastre del Camión",
+      "description": "Ben, Tom, and Judy attempt to refuel the truck. The plan goes catastrophically wrong when the fuel pump gets locked, leading to a fire and explosion that kills Tom and Judy, leaving Ben to fight his way back alone.",
+      "description_fr": "Ben, Tom et Judy tentent de faire le plein du camion. Le plan tourne catastrophiquement mal lorsque la pompe à carburant se bloque, provoquant un incendie et une explosion qui tuent Tom et Judy, laissant Ben se battre seul pour revenir.",
+      "description_es": "Ben, Tom y Judy intentan repostar el camión. El plan sale catastróficamente mal cuando la bomba de combustible se bloquea, causando un incendio y explosión que mata a Tom y Judy, dejando a Ben luchando solo para regresar."
+    },
+    {
+      "chapter": 7,
+      "timestamp": "01:05:00",
+      "title": "Siege and Deterioration",
+      "title_fr": "Siège et Détérioration",
+      "title_es": "Asedio y Deterioro",
+      "description": "The ghouls intensify their assault. Karen's condition worsens, and internal conflicts weaken the group's chances of survival.",
+      "description_fr": "Les goules intensifient leur attaque. L'état de Karen s'aggrave et les conflits internes affaiblissent les chances de survie du groupe.",
+      "description_es": "Los necrófagos intensifican su ataque. El estado de Karen empeora y los conflictos internos debilitan las posibilidades de supervivencia del grupo."
+    },
+    {
+      "chapter": 8,
+      "timestamp": "01:15:00",
+      "title": "The House Falls",
+      "title_fr": "La Chute de la Maison",
+      "title_es": "La Caída de la Casa",
+      "description": "Karen reanimates and kills her mother. Harry is shot by Ben. Barbara is dragged away by the ghouls, and Ben retreats to the cellar as the house is overrun.",
+      "description_fr": "Karen se réanime et tue sa mère. Harry est abattu par Ben. Barbara est emmenée par les goules et Ben se réfugie dans la cave tandis que la maison est envahie.",
+      "description_es": "Karen se reanima y mata a su madre. Harry es disparado por Ben. Barbara es arrastrada por los necrófagos y Ben se refugia en el sótano mientras la casa es invadida."
+    },
+    {
+      "chapter": 9,
+      "timestamp": "01:25:00",
+      "title": "Dawn and Rescue",
+      "title_fr": "L'Aube et le Sauvetage",
+      "title_es": "El Amanecer y el Rescate",
+      "description": "Ben survives the night in the cellar. At dawn, armed posses arrive to clear the area, but tragically mistake Ben for a ghoul and kill him.",
+      "description_fr": "Ben survit à la nuit dans la cave. À l'aube, des milices armées arrivent pour nettoyer la zone mais prennent tragiquement Ben pour une goule et le tuent.",
+      "description_es": "Ben sobrevive la noche en el sótano. Al amanecer, llegan grupos armados para limpiar el área, pero trágicamente confunden a Ben con un necrófago y lo matan."
+    },
+    {
+      "chapter": 10,
+      "timestamp": "01:31:00",
+      "title": "End Credits",
+      "title_fr": "Générique de Fin",
+      "title_es": "Créditos Finales",
+      "description": "Still photographs show Ben's body burned with the ghouls. The credits roll over these images, underscoring the bleak and tragic ending.",
+      "description_fr": "Des photographies fixes montrent le corps de Ben brûlé avec les goules. Le générique défile sur ces images, soulignant la fin tragique et sombre.",
+      "description_es": "Fotografías fijas muestran el cuerpo de Ben siendo quemado con los necrófagos. Los créditos aparecen sobre estas imágenes, subrayando el final trágico y sombrío."
+    }
+  ],
+  "poi":[
+    {
+      "id": 1,
+      "title": "Evans City Cemetery",
+      "title_fr": "Cimetière d'Evans City",
+      "title_es": "Cementerio de Evans City",
+      "latitude": 40.7681,
+      "longitude": -80.0634,
+      "description": "The cemetery where the opening scene was filmed, where Barbara and Johnny are attacked.",
+      "description_fr": "Le cimetière où la scène d'ouverture a été filmée, où Barbara et Johnny sont attaqués.",
+      "description_es": "El cementerio donde se filmó la escena de apertura, donde Barbara y Johnny son atacados.",
+      "timestamps": [
+        {
+          "time": "00:00:00",
+          "scene": "Opening credits and arrival at cemetery",
+          "scene_fr": "Générique d'ouverture et arrivée au cimetière",
+          "scene_es": "Créditos de apertura y llegada al cementerio"
+        },
+        {
+          "time": "00:02:30",
+          "scene": "Barbara and Johnny walking through cemetery",
+          "scene_fr": "Barbara et Johnny marchent dans le cimetière",
+          "scene_es": "Barbara y Johnny caminando por el cementerio"
+        },
+        {
+          "time": "00:05:15",
+          "scene": "First zombie attack, Johnny's death",
+          "scene_fr": "Première attaque de zombie, mort de Johnny",
+          "scene_es": "Primer ataque zombie, muerte de Johnny"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "The Farmhouse (Demolished)",
+      "title_fr": "La Ferme (Démolie)",
+      "title_es": "La Granja (Demolida)",
+      "latitude": 40.6584,
+      "longitude": -80.3256,
+      "description": "The main location where most of the film takes place. The house was located in the Evans City area and was demolished in the 1980s.",
+      "description_fr": "Le lieu principal où se déroule la majeure partie du film. La maison était située dans la région d'Evans City et a été démolie dans les années 1980.",
+      "description_es": "La ubicación principal donde tiene lugar la mayor parte de la película. La casa estaba ubicada en el área de Evans City y fue demolida en los años 1980.",
+      "timestamps": [
+        {
+          "time": "00:09:30",
+          "scene": "Barbara arrives at the farmhouse",
+          "scene_fr": "Barbara arrive à la ferme",
+          "scene_es": "Barbara llega a la granja"
+        },
+        {
+          "time": "00:13:00",
+          "scene": "Ben arrives and begins barricading",
+          "scene_fr": "Ben arrive et commence à barricader",
+          "scene_es": "Ben llega y comienza a barricar"
+        },
+        {
+          "time": "00:32:00",
+          "scene": "Survivors emerge from cellar",
+          "scene_fr": "Les survivants sortent de la cave",
+          "scene_es": "Los supervivientes salen del sótano"
+        },
+        {
+          "time": "01:00:00",
+          "scene": "Zombies surround the house",
+          "scene_fr": "Les zombies encerclent la maison",
+          "scene_es": "Los zombis rodean la casa"
+        },
+        {
+          "time": "01:15:00",
+          "scene": "House is overrun by zombies",
+          "scene_fr": "La maison est envahie par les zombies",
+          "scene_es": "La casa es invadida por zombis"
+        },
+        {
+          "time": "01:25:00",
+          "scene": "Posse arrives at dawn to clear the farmhouse",
+          "scene_fr": "La milice arrive à l'aube pour nettoyer la ferme",
+          "scene_es": "La milicia llega al amanecer para limpiar la granja"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Beechwood Farms Nature Reserve",
+      "title_fr": "Réserve Naturelle de Beechwood Farms",
+      "title_es": "Reserva Natural de Beechwood Farms",
+      "latitude": 40.5831,
+      "longitude": -79.9172,
+      "description": "Location used for some outdoor scenes and zombie attacks.",
+      "description_fr": "Lieu utilisé pour certaines scènes extérieures et attaques de zombies.",
+      "description_es": "Ubicación utilizada para algunas escenas al aire libre y ataques de zombies.",
+      "timestamps": [
+        {
+          "time": "00:56:00",
+          "scene": "Truck refueling attempt and explosion in outdoor area",
+          "scene_fr": "Tentative de ravitaillement du camion et explosion en extérieur",
+          "scene_es": "Intento de repostar el camión y explosión al aire libre"
+        },
+        {
+          "time": "01:05:00",
+          "scene": "Ben fights through zombies back to house",
+          "scene_fr": "Ben se bat contre les zombies pour retourner à la maison",
+          "scene_es": "Ben lucha contra zombis para volver a la casa"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "WIIC-TV Studios (Former)",
+      "title_fr": "Studios WIIC-TV (Anciens)",
+      "title_es": "Estudios WIIC-TV (Antiguos)",
+      "latitude": 40.4406,
+      "longitude": -79.9959,
+      "description": "Pittsburgh television station where the news broadcast scenes were filmed.",
+      "description_fr": "Station de télévision de Pittsburgh où les scènes de bulletins d'information ont été filmées.",
+      "description_es": "Estación de televisión de Pittsburgh donde se filmaron las escenas de noticias.",
+      "timestamps": [
+        {
+          "time": "00:20:00",
+          "scene": "First television news reports",
+          "scene_fr": "Premiers bulletins d'information télévisés",
+          "scene_es": "Primeros informes de noticias televisivos"
+        },
+        {
+          "time": "00:28:00",
+          "scene": "Expert interviews and emergency broadcasts",
+          "scene_fr": "Interviews d'experts et diffusions d'urgence",
+          "scene_es": "Entrevistas de expertos y transmisiones de emergencia"
+        },
+        {
+          "time": "00:45:00",
+          "scene": "Updates on rescue stations and instructions",
+          "scene_fr": "Mises à jour sur les centres de secours et instructions",
+          "scene_es": "Actualizaciones sobre estaciones de rescate e instrucciones"
+        },
+        {
+          "time": "01:10:00",
+          "scene": "Final news reports about the crisis",
+          "scene_fr": "Derniers bulletins d'information sur la crise",
+          "scene_es": "Informes finales de noticias sobre la crisis"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Downtown Pittsburgh",
+      "title_fr": "Centre-ville de Pittsburgh",
+      "title_es": "Centro de Pittsburgh",
+      "latitude": 40.4406,
+      "longitude": -79.9959,
+      "description": "Various street scenes and establishing shots were filmed in Pittsburgh.",
+      "description_fr": "Diverses scènes de rue et plans d'établissement ont été filmés à Pittsburgh.",
+      "description_es": "Varias escenas callejeras y tomas de establecimiento fueron filmadas en Pittsburgh."
+    },
+    {
+      "id": 6,
+      "title": "Butler County",
+      "title_fr": "Comté de Butler",
+      "title_es": "Condado de Butler",
+      "latitude": 40.8612,
+      "longitude": -79.8953,
+      "description": "Rural areas where posse and field scenes were filmed during the finale.",
+      "description_fr": "Zones rurales où les scènes de milice et de campagne ont été filmées pendant le final.",
+      "description_es": "Áreas rurales donde se filmaron las escenas de la milicia y el campo durante el final."
+    },
+    {
+      "id": 7,
+      "title": "Hardman Associates Studio",
+      "title_fr": "Studio Hardman Associates",
+      "title_es": "Estudio Hardman Associates",
+      "latitude": 40.4406,
+      "longitude": -79.9959,
+      "description": "Pittsburgh-based production company where George Romero worked, which produced the film.",
+      "description_fr": "Société de production basée à Pittsburgh où George Romero travaillait, qui a produit le film.",
+      "description_es": "Compañía de producción con sede en Pittsburgh donde trabajaba George Romero, que produjo la película."
+    }
+  ]
+}

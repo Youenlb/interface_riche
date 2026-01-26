@@ -1,68 +1,73 @@
 'use client'
-import { useEffect, useState } from "react";
-import { FilmData } from "./types";
-import Player from "@/components/Player";
+import { useState } from "react";
+import { LOCAL_DATA } from "./data"; 
+import Player from "@/components/Player"; // Ton Player ne change pas
 import AudioDescriptionManager from "@/components/AudioDescriptionManager";
 import Chapters from "@/components/Chapters";
-import dynamic from 'next/dynamic'; // Pour la map (Client side only)
+import dynamic from 'next/dynamic';
 
-// Import dynamique pour éviter l'erreur "window is not defined" avec Leaflet
 const MapDisplay = dynamic(() => import('@/components/MapDisplay'), { ssr: false });
 
 export default function Home() {
-  const [data, setData] = useState<FilmData | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [seekTime, setSeekTime] = useState<number | undefined>(undefined);
   const [adEnabled, setAdEnabled] = useState(false);
 
-  useEffect(() => {
-    fetch("https://tp-iai3.cleverapps.io/projet")
-      .then(r => r.json()).then(setData);
-  }, []);
-
-  if (!data) return <div>Chargement...</div>;
-
   const handleJump = (time: number) => {
-    setSeekTime(time); // Cela déclenche l'effet dans le Player
+    setSeekTime(time);
   };
 
   return (
-    <div className="grid-container" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', padding: '20px' }}>
+    <div className="grid-container" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px', padding: '20px', fontFamily: 'sans-serif' }}>
       
-      {/* Colonne Gauche : Média */}
       <main>
-        <header style={{ marginBottom: '1rem' }}>
-          <h1>{data.film.title}</h1>
-          <button onClick={() => setAdEnabled(!adEnabled)} style={{ padding: '5px 10px', background: adEnabled ? '#d4edda' : '#f8d7da' }}>
-            {adEnabled ? "Audio-Description : ON" : "Audio-Description : OFF"}
+        <header style={{ marginBottom: '1rem', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
+          <h1 style={{margin:0, fontSize:'1.5rem'}}>{LOCAL_DATA.film.title}</h1>
+          <button 
+            onClick={() => setAdEnabled(!adEnabled)} 
+            style={{ 
+                padding: '8px 16px', 
+                borderRadius: '20px',
+                border: 'none',
+                background: adEnabled ? '#2ecc71' : '#95a5a6',
+                color: 'white',
+                fontWeight: 'bold',
+                cursor: 'pointer'
+            }}
+          >
+            {adEnabled ? "Audio-Description : ON" : "Activer Audio-Description"}
           </button>
         </header>
 
         <Player 
-          videoUrl={data.film.file_url} 
-          subtitles={data.subtitles}
+          videoUrl={LOCAL_DATA.film.file_url} 
+          subtitles={LOCAL_DATA.subtitles}
           onTimeUpdate={setCurrentTime}
           seekTime={seekTime}
         />
+
         <AudioDescriptionManager 
-          jsonUrl={data["audio-description"]} 
+          cues={LOCAL_DATA.audiodescription} 
           currentTime={currentTime} 
           isEnabled={adEnabled}
         />
 
-        {/* La Carte est sous la vidéo */}
-        <MapDisplay url={data.poi} onPoiClick={handleJump} />
+        {/* La carte avec les points d'intérêts */}
+        <MapDisplay pois={LOCAL_DATA.poi} onPoiClick={handleJump} />
       </main>
 
-      {/* Colonne Droite : Navigation & Infos */}
       <aside>
-        <Chapters url={data.chapters} onChapterClick={handleJump} />
+        {/* Liste des chapitres */}
+        <Chapters data={LOCAL_DATA.chapters} onChapterClick={handleJump} />
         
-        <div className="synopsis" style={{ marginTop: '20px', padding: '10px', background: '#f5f5f5' }}>
-          <h3>À propos</h3>
-          <a href={data.film.synopsis_url} target="_blank" rel="noopener noreferrer">
-            Lire le synopsis sur Wikipédia
-          </a>
+        <div style={{ marginTop: 20, padding: 15, background: '#ecf0f1', borderRadius: 8 }}>
+           <h3 style={{marginTop:0}}>Synopsis</h3>
+           <p style={{fontSize: '0.9rem'}}>
+               Le film culte de George Romero. Un groupe d'étrangers se retrouve piégé dans une ferme isolée alors que les morts reviennent à la vie...
+           </p>
+           <a href={LOCAL_DATA.film.synopsis_url} target="_blank" rel="noopener noreferrer" style={{ color: '#3498db' }}>
+              Voir sur Wikipédia
+           </a>
         </div>
       </aside>
     </div>
