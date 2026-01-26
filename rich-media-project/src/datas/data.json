@@ -5,9 +5,9 @@
         "synopsis_url": "https://en.wikipedia.org/wiki/Night_of_the_Living_Dead"
     },
     "subtitles":{
-        "en":"../subtitles/subtitles-en.srt",
-        "fr":"../subtitles/subtitles-fr.srt",
-        "es":"../subtitles/subtitles-es.srt"
+        "en":"/subtitles/subtitles-en.vtt",
+        "fr":"/subtitles/subtitles-fr.vtt",
+        "es":"/subtitles/subtitles-es.vtt"
     },
     "audiodescription":[
     {

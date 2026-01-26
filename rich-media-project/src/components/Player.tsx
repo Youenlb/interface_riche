@@ -1,41 +1,67 @@
 'use client'
 import { useRef, useEffect } from "react";
+import { Subtitles } from "@/app/types";
 
 interface PlayerProps {
   videoUrl: string;
-  subtitles: { en: string; fr: string; es: string };
-  seekTime?: number; // Pour piloter la vidéo depuis l'extérieur
+  subtitles: Subtitles;
+  seekTime?: number; 
   onTimeUpdate: (t: number) => void;
 }
 
 export default function Player({ videoUrl, subtitles, seekTime, onTimeUpdate }: PlayerProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
-  // Synchronisation temporelle (quand on clique sur un chapitre)
+  // Gestion du saut dans le temps (Chapitres / Map)
   useEffect(() => {
     if (seekTime !== undefined && videoRef.current) {
       videoRef.current.currentTime = seekTime;
-      videoRef.current.play();
+      // videoRef.current.play(); // Décommenter si tu veux que la lecture parte direct
     }
   }, [seekTime]);
 
   return (
-    <div className="player-wrapper" style={{ position: 'relative', width: '100%' }}>
+    <div style={{ position: 'relative', width: '100%', background: '#000', borderRadius: '4px', overflow: 'hidden' }}>
       <video
         ref={videoRef}
         controls
-        crossOrigin="anonymous"
-        style={{ width: '100%', borderRadius: '8px' }}
+        playsInline
+        preload="metadata"
+        // Indispensable si la vidéo vient d'un autre domaine (Wikimedia) pour autoriser les sous-titres
+        crossOrigin="anonymous" 
+        style={{ width: '100%', display: 'block' }}
         onTimeUpdate={(e) => onTimeUpdate(e.currentTarget.currentTime)}
       >
         <source src={videoUrl} type="video/webm" />
         
-        {/* Note: Les navigateurs préfèrent le format VTT. 
-            Si le SRT ne s'affiche pas, c'est une limitation navigateur, 
-            mais le code est sémantiquement correct. */}
-        <track label="Français" kind="subtitles" srcLang="fr" src={subtitles.fr} default />
-        <track label="English" kind="subtitles" srcLang="en" src={subtitles.en} />
-        <track label="Español" kind="subtitles" srcLang="es" src={subtitles.es} />
+        {/* --- PISTES DE SOUS-TITRES --- */}
+        
+        {/* Français (Par défaut) */}
+        <track 
+            kind="subtitles" 
+            src={subtitles.fr} 
+            srcLang="fr" 
+            label="Français" 
+            default 
+        />
+
+        {/* Anglais */}
+        <track 
+            kind="subtitles" 
+            src={subtitles.en} 
+            srcLang="en" 
+            label="English" 
+        />
+
+        {/* Espagnol */}
+        <track 
+            kind="subtitles" 
+            src={subtitles.es} 
+            srcLang="es" 
+            label="Español" 
+        />
+
+        <p>Votre navigateur ne supporte pas la lecture vidéo HTML5.</p>
       </video>
     </div>
   );

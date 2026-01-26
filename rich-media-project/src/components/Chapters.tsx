@@ -1,33 +1,51 @@
 'use client'
 import { ChapterEntry } from "@/app/types";
-import { parseTime } from "@/app/utils"; // On importe la fonction
+import { parseTime } from "@/app/utils";
 
-export default function Chapters({ data, onChapterClick }: { data: ChapterEntry[], onChapterClick: (t: number) => void }) {
+interface ChaptersProps {
+  data: ChapterEntry[];
+  onChapterClick: (t: number) => void;
+  currentTime?: number;
+}
+
+export default function Chapters({ data, onChapterClick, currentTime = 0 }: ChaptersProps) {
   return (
-    <nav aria-label="Chapitres du film" style={{ maxHeight: '400px', overflowY: 'auto' }}>
-      <h3 style={{ borderBottom: '2px solid #ddd', paddingBottom: '10px' }}>Chapitres</h3>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+    // <nav> pour repère sémantique
+    <nav aria-labelledby="chapters-heading">
+      <h2 id="chapters-heading" className="section-title" style={{fontSize: '1.25rem', marginBottom: '1rem', borderBottom: '2px solid #8c5e3c'}}>
+        Chapitres
+      </h2>
+      
+      {/* <ul> pour structurer la liste pour les lecteurs d'écran */}
+      <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
         {data.map((chap, i) => {
-          const seconds = parseTime(chap.timestamp); // Conversion ici
+          const seconds = parseTime(chap.timestamp);
+          const nextChapSeconds = i < data.length - 1 ? parseTime(data[i+1].timestamp) : Infinity;
+          
+          // Calcul de l'état "courant"
+          const isActive = currentTime >= seconds && currentTime < nextChapSeconds;
+
           return (
             <li key={i} style={{ marginBottom: '8px' }}>
               <button 
+                // CLASSE : Utilisation de la classe CSS définie plus haut
+                className={`list-item ${isActive ? 'active' : ''}`}
+                
+                // ACTION : Accessible clavier (Entrée/Espace) nativement grâce à <button>
                 onClick={() => onChapterClick(seconds)}
-                className="chapter-btn"
-                aria-label={`Aller au chapitre ${chap.title_fr} à ${chap.timestamp}`}
-                style={{ 
-                    width: '100%', 
-                    textAlign: 'left', 
-                    padding: '10px', 
-                    background: 'white',
-                    border: '1px solid #ccc',
-                    borderRadius: '4px',
-                    cursor: 'pointer'
-                }}
+                
+                // ETAT : Indique au lecteur d'écran quel élément est sélectionné
+                aria-current={isActive ? "step" : undefined}
+                
+                // INFO : Label explicite si le texte visuel ne suffit pas
+                aria-label={`Lire le chapitre : ${chap.title_fr} à ${chap.timestamp}`}
               >
-                <span style={{ fontWeight: 'bold', color: '#005fcc' }}>{chap.timestamp}</span>
-                <br/>
-                {chap.title_fr}
+                <span style={{ display: 'block', fontSize: '0.85em', marginBottom: '4px' }}>
+                  ⏱ {chap.timestamp}
+                </span>
+                <span style={{ fontWeight: 600 }}>
+                  {chap.title_fr}
+                </span>
               </button>
             </li>
           );
