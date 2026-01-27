@@ -37,7 +37,6 @@ export default function Home() {
                 <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-gray-900 m-0">
                   {LOCAL_DATA.film.title}
                 </h1>
-                <p className="text-sm text-gray-500">Interface Riche & Interactive</p>
               </div>
               
               <button 
