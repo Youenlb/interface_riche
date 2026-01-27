@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   /* Palette Suédoise (Ajustée pour contraste RGAA > 4.5:1) */
   --swedish-white: #fefefe;
