@@ -42,6 +42,12 @@ export interface POIEntry {
   timestamps?: POIScene[]; // <--- LE ? EST CRUCIAL ICI
 }
 
+export interface ChatMessage {
+  when: string;   // Timestamp Unix (ex: "1580742794")
+  name: string;   // Auteur (ex: "Alice")
+  message: string; // Contenu
+  moment?: number; // Timestamp vidéo optionnel (en secondes)
+}
 export interface FilmData {
   film: FilmInfo;
   subtitles: Subtitles;
