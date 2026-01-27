@@ -22,28 +22,34 @@ export default function Home() {
     <>
       <a 
         href="#main-content" 
-        className="absolute top-[-100px] left-0 bg-black text-white p-3 z-50 transition-all focus:top-0"
+        className="absolute top-[-100px] left-0 bg-indigo-700 text-white p-3 z-50 transition-all focus:top-0 font-bold rounded-br-lg shadow-lg"
       >
         Aller au contenu principal
       </a>
 
-      {/* CONTAINER GLOBAL 
-          - Mobile : h-auto (scroll normal)
-          - Desktop (lg) : h-screen (tient dans l'écran) + overflow-hidden (pas de scroll page)
-      */}
-      <div className="w-full lg:h-screen lg:overflow-hidden flex flex-col bg-swedish-white">
+      {/* FOND GLOBAL : Gris très clair pour un look moderne */}
+      <div className="w-full lg:h-screen lg:overflow-hidden flex flex-col bg-gray-50 text-gray-900 font-sans">
         
-        {/* --- ZONE HAUTE (Titre + Chapitres) --- 
-            flex-shrink-0 empêche cette zone d'être écrasée
-        */}
-        <div className="flex-shrink-0 p-4 pb-2 border-b border-gray-100">
-            <div className="flex justify-between items-center mb-3">
-              <h1 className="text-xl md:text-2xl font-bold text-swedish-blue m-0">{LOCAL_DATA.film.title}</h1>
+        {/* ZONE HAUTE : Fond blanc pour détacher le header */}
+        <div className="flex-shrink-0 p-4 pb-2 bg-white shadow-sm z-10 relative">
+            <div className="flex justify-between items-center mb-4">
+              <div>
+                <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-gray-900 m-0">
+                  {LOCAL_DATA.film.title}
+                </h1>
+                <p className="text-sm text-gray-500">Interface Riche & Interactive</p>
+              </div>
+              
               <button 
                   onClick={() => setAdEnabled(!adEnabled)} 
-                  className={`text-xs px-3 py-1 rounded-full font-bold border transition-colors ${adEnabled ? 'bg-swedish-sage text-white' : 'bg-gray-100 text-gray-700'}`}
+                  className={`
+                    text-sm px-4 py-2 rounded-full font-semibold transition-all shadow-sm
+                    ${adEnabled 
+                      ? 'bg-indigo-100 text-indigo-700 border-2 border-indigo-200' 
+                      : 'bg-white text-gray-600 border-2 border-gray-200 hover:bg-gray-100'}
+                  `}
               >
-                {adEnabled ? "AD : ON" : "Activer AD"}
+                {adEnabled ? "AD : Activée 🔈" : "Activer AD"}
               </button>
             </div>
             
@@ -54,17 +60,14 @@ export default function Home() {
             />
         </div>
 
-        {/* --- ZONE PRINCIPALE (Grid) ---
-            flex-1 : Prend toute la hauteur restante
-            min-h-0 : Indispensable pour que le scroll interne fonctionne dans les enfants flex
-        */}
-        <main id="main-content" className="flex-1 min-h-0 p-4 pt-2 grid grid-cols-1 lg:grid-cols-4 gap-4">
+        {/* ZONE PRINCIPALE */}
+        <main id="main-content" className="flex-1 min-h-0 p-4 grid grid-cols-1 lg:grid-cols-4 gap-4 bg-gray-50">
             
-            {/* COLONNE GAUCHE (Vidéo + Map) - 75% largeur */}
+            {/* COLONNE GAUCHE (Vidéo + Map) */}
             <div className="lg:col-span-3 flex flex-col gap-4 h-full min-h-0">
                 
-                {/* 1. VIDÉO (Moitié de la hauteur dispo) */}
-                <section aria-label="Lecteur vidéo" className="lg:h-1/2 w-full bg-black rounded-xl overflow-hidden shadow-lg flex-shrink-0 min-h-[250px]">
+                {/* BLOC VIDÉO : Ombre portée plus douce, coins plus arrondis */}
+                <section aria-label="Lecteur vidéo" className="lg:h-1/2 w-full bg-black rounded-2xl overflow-hidden shadow-xl flex-shrink-0 min-h-[250px] ring-1 ring-black/10">
                    <div className="h-full w-full flex items-center justify-center">
                       <Player 
                         videoUrl={LOCAL_DATA.film.file_url} 
@@ -75,8 +78,8 @@ export default function Home() {
                    </div>
                 </section>
 
-                {/* 2. MAP (L'autre moitié) */}
-                <section aria-label="Carte interactive" className="lg:h-1/2 w-full rounded-xl overflow-hidden border border-swedish-grey shadow-md relative z-0 flex-shrink-0 min-h-[250px]">
+                {/* BLOC MAP : Fond blanc propre, ombre douce, sans bordure grise moche */}
+                <section aria-label="Carte interactive" className="lg:h-1/2 w-full bg-white rounded-2xl overflow-hidden shadow-xl relative z-0 flex-shrink-0 min-h-[250px] ring-1 ring-black/5">
                     <div className="h-full w-full">
                        <MapDisplay pois={LOCAL_DATA.poi} onPoiClick={handleJump} />
                     </div>
@@ -84,12 +87,9 @@ export default function Home() {
 
             </div>
 
-            {/* COLONNE DROITE (Chat) - 25% largeur */}
+            {/* COLONNE DROITE (Chat) */}
             <div className="lg:col-span-1 h-full min-h-0">
-                {/* Desktop : h-full pour prendre toute la hauteur de la colonne
-                   Mobile : h-[500px] fixe pour être utilisable en fin de page
-                */}
-                <section className="h-[500px] lg:h-full flex flex-col">
+                <section className="h-[500px] lg:h-full flex flex-col rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 bg-white">
                    <Chat 
                       currentTime={currentTime}
                       onTimestampClick={handleJump}
@@ -99,7 +99,6 @@ export default function Home() {
 
         </main>
 
-        {/* Audio Manager (Invisible) */}
         <AudioDescriptionManager 
            cues={LOCAL_DATA.audiodescription} 
            currentTime={currentTime} 

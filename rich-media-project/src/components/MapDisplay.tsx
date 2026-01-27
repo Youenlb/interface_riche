@@ -27,7 +27,7 @@ export default function MapDisplay({ pois, onPoiClick }: { pois: POIEntry[], onP
 
   return (
     // Utilisation de Tailwind pour la taille et les bordures
-    <div className="h-full w-full rounded-lg overflow-hidden border border-swedish-grey shadow-sm">
+    <div className="h-full w-full rounded-2xl overflow-hidden border border-swedish-grey shadow-sm">
       <MapContainer center={defaultCenter} zoom={9} style={{ height: '100%', width: '100%' }}>
         <TileLayer 
             attribution='&copy; OpenStreetMap' 

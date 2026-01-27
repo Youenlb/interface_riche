@@ -10,14 +10,9 @@ interface ChaptersProps {
 
 export default function Chapters({ data, onChapterClick, currentTime = 0 }: ChaptersProps) {
   return (
-    <nav aria-label="Chapitres du film" className="w-full mb-4">
-      <h2 className="sr-only">Navigation par chapitres</h2>
-      
-      {/* DESIGN : 
-         - Mobile : Scroll horizontal pour ne pas prendre trop de place verticale
-         - Desktop (md+) : Flex wrap (retour à la ligne automatique) comme demandé
-      */}
-      <div className="flex overflow-x-auto md:flex-wrap gap-2 pb-2 md:pb-0 scrollbar-hide">
+    <nav aria-label="Chapitres du film" className="w-full">
+      <div className="flex flex-wrap gap-2 items-center">
+        <span className="text-sm font-bold text-gray-400 mr-2 uppercase tracking-wider">Chapitres</span>
         {data.map((chap, i) => {
           const seconds = parseTime(chap.timestamp);
           const nextChapSeconds = i < data.length - 1 ? parseTime(data[i+1].timestamp) : Infinity;
@@ -28,16 +23,17 @@ export default function Chapters({ data, onChapterClick, currentTime = 0 }: Chap
               key={i}
               onClick={() => onChapterClick(seconds)}
               aria-current={isActive ? "step" : undefined}
+              // CHANGEMENT DE LOOK : Pillules arrondies, couleur Indigo vive quand actif
               className={`
-                flex-shrink-0 md:flex-shrink 
                 flex items-center gap-2 
-                px-4 py-3 rounded-lg border transition-all duration-200 text-sm
+                px-4 py-2 rounded-full text-xs md:text-sm transition-all duration-300 ease-in-out
+                font-medium ring-1 ring-inset
                 ${isActive 
-                  ? 'bg-swedish-blue text-white border-swedish-blue shadow-md font-bold' 
-                  : 'bg-white text-swedish-charcoal border-swedish-grey hover:border-swedish-sage hover:bg-gray-50'}
+                  ? 'bg-indigo-600 text-white ring-indigo-600 shadow-md scale-105' 
+                  : 'bg-gray-100 text-gray-700 ring-transparent hover:bg-gray-200 hover:text-gray-900'}
               `}
             >
-              <span className={`text-xs font-mono ${isActive ? 'text-blue-100' : 'text-gray-500'}`}>
+              <span className={`font-mono text-[10px] opacity-80 ${isActive ? 'text-indigo-200' : 'text-gray-500'}`}>
                 {chap.timestamp}
               </span>
               <span>
