@@ -10,40 +10,37 @@ interface ChaptersProps {
 
 export default function Chapters({ data, onChapterClick, currentTime = 0 }: ChaptersProps) {
   return (
-    // <nav> pour repère sémantique
     <nav aria-labelledby="chapters-heading">
-      <h2 id="chapters-heading" className="section-title" style={{fontSize: '1.25rem', marginBottom: '1rem', borderBottom: '2px solid #8c5e3c'}}>
+      <h2 
+        id="chapters-heading" 
+        className="text-xl mb-4 border-b-2 border-swedish-wood pb-2 text-swedish-blue font-bold"
+      >
         Chapitres
       </h2>
       
-      {/* <ul> pour structurer la liste pour les lecteurs d'écran */}
-      <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+      <ul className="list-none p-0 m-0">
         {data.map((chap, i) => {
           const seconds = parseTime(chap.timestamp);
           const nextChapSeconds = i < data.length - 1 ? parseTime(data[i+1].timestamp) : Infinity;
-          
-          // Calcul de l'état "courant"
           const isActive = currentTime >= seconds && currentTime < nextChapSeconds;
 
           return (
-            <li key={i} style={{ marginBottom: '8px' }}>
+            <li key={i} className="mb-2">
               <button 
-                // CLASSE : Utilisation de la classe CSS définie plus haut
-                className={`list-item ${isActive ? 'active' : ''}`}
-                
-                // ACTION : Accessible clavier (Entrée/Espace) nativement grâce à <button>
                 onClick={() => onChapterClick(seconds)}
-                
-                // ETAT : Indique au lecteur d'écran quel élément est sélectionné
                 aria-current={isActive ? "step" : undefined}
-                
-                // INFO : Label explicite si le texte visuel ne suffit pas
                 aria-label={`Lire le chapitre : ${chap.title_fr} à ${chap.timestamp}`}
+                className={`
+                  w-full text-left p-4 rounded transition-all border
+                  ${isActive 
+                    ? 'bg-swedish-blue text-white border-swedish-blue font-bold shadow-md transform scale-[1.02]' 
+                    : 'bg-white text-swedish-charcoal border-gray-200 hover:bg-white hover:border-swedish-sage hover:shadow-sm'}
+                `}
               >
-                <span style={{ display: 'block', fontSize: '0.85em', marginBottom: '4px' }}>
+                <span className="block text-sm opacity-80 mb-1">
                   ⏱ {chap.timestamp}
                 </span>
-                <span style={{ fontWeight: 600 }}>
+                <span className="block text-base">
                   {chap.title_fr}
                 </span>
               </button>

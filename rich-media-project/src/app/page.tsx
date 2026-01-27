@@ -4,10 +4,9 @@ import { LOCAL_DATA } from "./data";
 import Player from "@/components/Player";
 import AudioDescriptionManager from "@/components/AudioDescriptionManager";
 import Chapters from "@/components/Chapters";
-import Chat from "@/components/Chat"; // Assure-toi d'avoir créé le fichier Chat.tsx
+import Chat from "@/components/Chat"; 
 import dynamic from 'next/dynamic';
 
-// Import dynamique pour la carte (évite l'erreur "window not defined" du serveur)
 const MapDisplay = dynamic(() => import('@/components/MapDisplay'), { ssr: false });
 
 export default function Home() {
@@ -15,60 +14,48 @@ export default function Home() {
   const [seekTime, setSeekTime] = useState<number | undefined>(undefined);
   const [adEnabled, setAdEnabled] = useState(false);
 
-  // Fonction appelée quand on clique sur un chapitre, un point de la carte ou un timestamp du chat
   const handleJump = (time: number) => {
     setSeekTime(time);
   };
 
   return (
     <>
-      {/* SKIP LINK (Accessibilité Clavier) */}
+      {/* SKIP LINK ACCESSIBLE */}
       <a 
         href="#main-content" 
-        className="skip-link" 
-        style={{ 
-          position: 'absolute', top: '-100px', left: 0, 
-          background: 'black', color: 'white', padding: '10px', zIndex: 9999,
-          transition: 'top 0.3s'
-        }}
-        onFocus={(e) => e.currentTarget.style.top = '0'}
-        onBlur={(e) => e.currentTarget.style.top = '-100px'}
+        className="absolute top-[-100px] left-0 bg-black text-white p-3 z-50 transition-all focus:top-0"
       >
         Aller au contenu principal
       </a>
 
-      <div className="app-container">
+      <div className="max-w-[1400px] mx-auto p-5">
         
         {/* HEADER */}
-        <header role="banner" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px', paddingBottom: '20px', borderBottom: '1px solid #ddd' }}>
+        <header role="banner" className="flex flex-wrap justify-between items-center mb-8 pb-5 border-b border-swedish-grey gap-4">
           <div>
-            <h1 style={{ margin: 0, fontSize: '1.8rem', color: '#1a1a1a' }}>{LOCAL_DATA.film.title}</h1>
-            <p style={{ margin: '5px 0 0 0', color: '#666', fontSize: '0.9rem' }}>Projet Rich Media - ENSSAT</p>
+            <h1 className="m-0 text-3xl font-bold text-swedish-charcoal">{LOCAL_DATA.film.title}</h1>
+            <p className="mt-1 text-gray-500 text-sm italic">Projet Rich Media - ENSSAT</p>
           </div>
           
           <button 
             onClick={() => setAdEnabled(!adEnabled)} 
             aria-pressed={adEnabled}
-            style={{
-              background: adEnabled ? '#2c5282' : '#e5e3df',
-              color: adEnabled ? 'white' : '#1a1a1a',
-              border: '2px solid transparent', 
-              padding: '10px 20px', 
-              borderRadius: '20px', 
-              fontWeight: 'bold', 
-              cursor: 'pointer',
-              transition: 'background 0.3s'
-            }}
+            className={`
+              px-6 py-3 rounded-full font-bold transition-colors border-2
+              ${adEnabled 
+                ? 'bg-swedish-blue text-white border-swedish-blue' 
+                : 'bg-swedish-cream text-swedish-charcoal border-transparent hover:bg-gray-200'}
+            `}
           >
-            {adEnabled ? "Audio-Description : ON" : "Activer Audio-Description"}
+            {adEnabled ? "Audio-Description : ON 🔈" : "Activer Audio-Description"}
           </button>
         </header>
 
         {/* LAYOUT PRINCIPAL (Flexbox: Aside + Main) */}
-        <div className="main-layout">
+        <div className="flex flex-col md:flex-row gap-8 items-start">
           
           {/* ASIDE : Navigation (Chapitres) */}
-          <aside role="complementary">
+          <aside role="complementary" className="w-full md:w-1/4 bg-swedish-cream p-5 rounded-lg shadow-sm">
             <Chapters 
               data={LOCAL_DATA.chapters} 
               onChapterClick={handleJump} 
@@ -77,10 +64,10 @@ export default function Home() {
           </aside>
 
           {/* MAIN : Contenu principal */}
-          <main id="main-content" className="content-area" role="main">
+          <main id="main-content" className="w-full md:w-3/4 flex flex-col gap-6" role="main">
             
             {/* 1. SECTION VIDÉO */}
-            <section aria-label="Lecteur vidéo">
+            <section aria-label="Lecteur vidéo" className="w-full shadow-lg rounded-lg overflow-hidden">
               <Player 
                 videoUrl={LOCAL_DATA.film.file_url} 
                 subtitles={LOCAL_DATA.subtitles}
@@ -89,7 +76,6 @@ export default function Home() {
               />
             </section>
 
-            {/* Service Audio-Description (Invisible) */}
             <AudioDescriptionManager 
               cues={LOCAL_DATA.audiodescription} 
               currentTime={currentTime} 
@@ -97,18 +83,18 @@ export default function Home() {
             />
 
             {/* 2. SECTION INTERACTIVE (Grille : Carte + Chat) */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginTop: '10px' }}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               
               {/* Carte à Gauche */}
-              <div style={{ height: '450px', display: 'flex', flexDirection: 'column' }}>
-                <h2 style={{ fontSize: '1.2rem', color: '#2c5282', margin: '0 0 10px 0' }}>Lieux de tournage</h2>
-                <MapDisplay pois={LOCAL_DATA.poi} onPoiClick={handleJump} />
+              <div className="h-[500px] flex flex-col">
+                <h2 className="text-xl font-bold text-swedish-blue mb-3">Lieux de tournage</h2>
+                <div className="flex-1 rounded-lg overflow-hidden border border-swedish-grey shadow-sm">
+                  <MapDisplay pois={LOCAL_DATA.poi} onPoiClick={handleJump} />
+                </div>
               </div>
 
-              {/* Chat à Droite (WebSocket) */}
-              <div style={{ height: '450px', display: 'flex', flexDirection: 'column' }}>
-                {/* Le titre est géré à l'intérieur du composant Chat ou ici, au choix. 
-                    Le composant Chat que je t'ai donné a déjà son titre. */}
+              {/* Chat à Droite */}
+              <div className="h-[500px] flex flex-col">
                 <Chat 
                   currentTime={currentTime}
                   onTimestampClick={handleJump}
@@ -120,7 +106,7 @@ export default function Home() {
         </div>
 
         {/* FOOTER */}
-        <footer role="contentinfo" style={{ marginTop: '40px', padding: '20px', textAlign: 'center', borderTop: '1px solid #ccc', color: '#666', fontSize: '0.8rem' }}>
+        <footer role="contentinfo" className="mt-10 pt-5 text-center border-t border-swedish-grey text-gray-500 text-sm">
           <p>© 2026 Projet Rich Media - Accessible selon RGAA</p>
         </footer>
       </div>

@@ -2,99 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  /* Palette Suédoise (Ajustée pour contraste RGAA > 4.5:1) */
-  --swedish-white: #fefefe;
-  --swedish-cream: #f9f7f2;
-  --swedish-sage: #4a634e;  /* Foncé pour le texte (au lieu de #9caf88) */
-  --swedish-blue: #2c5282;  /* Foncé pour le contraste */
-  --swedish-grey: #e5e3df;
-  --swedish-charcoal: #1a1a1a; /* Presque noir pour le texte principal */
-  --swedish-warm-wood: #8c5e3c; /* Plus foncé pour les bordures */
-  
-  --font-primary: 'Inter', sans-serif;
-  --focus-color: #d35400; /* Orange visible pour le focus clavier */
-}
-
-body {
-  margin: 0;
-  background-color: var(--swedish-white);
-  color: var(--swedish-charcoal);
-  font-family: var(--font-primary);
-  line-height: 1.5; /* Meilleure lisibilité (Cours: "Perceptible") */
-}
-
 /* --- ACCESSIBILITÉ CLAVIER (Pilier "Opérable") --- */
-/* Règle d'or : On ne supprime jamais l'outline sans le remplacer */
-*:focus-visible {
-  outline: 3px solid var(--focus-color);
+/* On force un outline visible pour la navigation au clavier */
+:focus-visible {
+  outline: 3px solid #d35400; /* Orange visible */
   outline-offset: 2px;
 }
 
-.app-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-header {
-  margin-bottom: 30px;
-  border-bottom: 1px solid var(--swedish-grey);
-  padding-bottom: 20px;
-}
-
-.main-layout {
-  display: flex;
-  gap: 30px;
-  align-items: flex-start;
-}
-
-/* Responsive : On empile sur mobile */
-@media (max-width: 768px) {
-  .main-layout { flex-direction: column; }
-  aside, main.content-area { width: 100%; }
-}
-
-aside {
-  width: 25%;
-  background: var(--swedish-cream);
-  padding: 20px;
-  border-radius: 8px;
-}
-
-main.content-area {
-  width: 75%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-/* --- COMPOSANTS LISTE (Respect sémantique) --- */
-/* On style de vrais boutons pour ressembler à des items de liste */
-button.list-item {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 15px;
-  margin-bottom: 8px;
-  border: 1px solid #ccc; /* Bordure visible pour contraste */
-  background: white;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  color: var(--swedish-charcoal);
-  transition: all 0.2s;
-}
-
-button.list-item:hover {
-  background-color: #f0f0f0;
-  border-color: var(--swedish-sage);
-}
-
-/* État Actif : Contraste élevé requis */
-button.list-item.active {
-  background-color: var(--swedish-blue);
-  color: white;
-  border-color: var(--swedish-blue);
-  font-weight: bold;
+body {
+  /* On applique la couleur de fond et la police par défaut via Tailwind dans layout.tsx,
+     mais on peut le forcer ici si besoin */
+  @apply bg-swedish-white text-swedish-charcoal font-sans;
 }

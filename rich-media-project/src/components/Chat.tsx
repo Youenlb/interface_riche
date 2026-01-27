@@ -14,7 +14,6 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
   
   // --- GESTION DU TIMECODE MANUEL ---
   const [includeTime, setIncludeTime] = useState(false);
-  // AJOUT DES HEURES ICI
   const [manualHour, setManualHour] = useState("00");
   const [manualMin, setManualMin] = useState("00");
   const [manualSec, setManualSec] = useState("00");
@@ -32,6 +31,7 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
         if (Array.isArray(data)) {
           setMessages((prev) => {
             const newMsgs = [...prev, ...data];
+            // Dédoublonnage + Tri
             const uniqueMsgs = newMsgs.filter((msg, index, self) =>
                 index === self.findIndex((t) => (
                     t.when === msg.when && t.name === msg.name && t.message === msg.message
@@ -56,14 +56,10 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
   }, [messages]);
 
   // --- Helpers ---
-  
-  // MISE À JOUR : Format HH:MM:SS
   const formatTime = (seconds: number) => {
     const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
     const s = Math.floor(seconds % 60);
-    
-    // On affiche toujours HH:MM:SS pour la cohérence
     return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
@@ -72,7 +68,6 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
     return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
-  // MISE À JOUR : Récupération des Heures/Minutes/Secondes actuelles
   const syncWithCurrentTime = () => {
     const h = Math.floor(currentTime / 3600);
     const remainingTime = currentTime % 3600;
@@ -85,9 +80,7 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
   };
 
   const toggleTimeOption = () => {
-    if (!includeTime) {
-        syncWithCurrentTime();
-    }
+    if (!includeTime) syncWithCurrentTime();
     setIncludeTime(!includeTime);
   };
 
@@ -99,7 +92,6 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
 
     let calculatedMoment = undefined;
     if (includeTime) {
-        // CALCUL INCLUANT LES HEURES
         const h = parseInt(manualHour) || 0;
         const m = parseInt(manualMin) || 0;
         const s = parseInt(manualSec) || 0;
@@ -115,25 +107,24 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
 
     ws.current.send(JSON.stringify(msgToSend));
     setMessages((prev) => [...prev, msgToSend]);
-
     setInputText("");
     setIncludeTime(false);
   };
 
   return (
-    <section aria-labelledby="chat-heading" style={{ display: 'flex', flexDirection: 'column', height: '100%', border: '1px solid #ccc', borderRadius: '8px', background: '#fff' }}>
+    <section aria-labelledby="chat-heading" className="flex flex-col h-full border border-swedish-grey rounded-lg bg-white overflow-hidden shadow-sm">
       
       {/* Header */}
-      <div style={{ padding: '10px', background: '#f5f5f5', borderBottom: '1px solid #ccc', display:'flex', justifyContent:'space-between', alignItems:'center' }}>
-        <h2 id="chat-heading" style={{ margin: 0, fontSize: '1.1rem', color: '#2c5282' }}>Discussion</h2>
-        <div style={{display:'flex', alignItems:'center', gap:'5px'}}>
-            <label htmlFor="pseudo-input" style={{fontSize:'0.8rem', color:'#666'}}>Pseudo:</label>
+      <div className="p-3 bg-gray-50 border-b border-swedish-grey flex justify-between items-center">
+        <h2 id="chat-heading" className="m-0 text-lg text-swedish-blue font-bold">Discussion</h2>
+        <div className="flex items-center gap-2">
+            <label htmlFor="pseudo-input" className="text-xs text-gray-500 font-bold">Pseudo:</label>
             <input 
                 id="pseudo-input"
                 type="text" 
                 value={pseudo} 
                 onChange={(e) => setPseudo(e.target.value)} 
-                style={{ width: '80px', padding: '4px', fontSize:'0.8rem', borderRadius:'4px', border:'1px solid #ccc' }}
+                className="w-24 p-1 text-sm rounded border border-gray-300 focus:border-swedish-blue outline-none"
             />
         </div>
       </div>
@@ -143,42 +134,29 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
         ref={scrollRef}
         role="log" 
         aria-live="polite"
-        style={{ flex: 1, overflowY: 'auto', padding: '15px', background: '#fafafa' }}
+        className="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-3"
       >
         {messages.map((msg, index) => {
             const isMe = msg.name === pseudo;
             return (
-              <div key={index} style={{ marginBottom: '10px', display: 'flex', flexDirection: 'column', alignItems: isMe ? 'flex-end' : 'flex-start' }}>
-                <div style={{ 
-                    maxWidth: '85%', padding: '8px 12px', borderRadius: '8px',
-                    background: isMe ? '#e3f2fd' : 'white',
-                    border: '1px solid #e0e0e0', boxShadow: '0 1px 2px rgba(0,0,0,0.05)'
-                }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems:'baseline', gap:'10px', marginBottom: '4px', fontSize: '0.75rem', color:'#666' }}>
-                        <strong>{msg.name}</strong> 
+              <div key={index} className={`flex flex-col ${isMe ? 'items-end' : 'items-start'}`}>
+                <div className={`
+                    max-w-[85%] p-3 rounded-lg shadow-sm border
+                    ${isMe 
+                        ? 'bg-blue-50 border-blue-100 text-right' 
+                        : 'bg-white border-gray-200 text-left'}
+                `}>
+                    <div className={`flex gap-2 text-xs mb-1 text-gray-500 ${isMe ? 'justify-end' : 'justify-start'}`}>
+                        <strong className="text-swedish-sage">{msg.name}</strong> 
                         <span>{formatMessageDate(msg.when)}</span>
                     </div>
                     
-                    <p style={{ margin: 0, color: '#333', fontSize:'0.95rem' }}>{msg.message}</p>
+                    <p className="m-0 text-swedish-charcoal text-sm leading-relaxed">{msg.message}</p>
                     
                     {msg.moment !== undefined && (
                         <button 
                             onClick={() => onTimestampClick(msg.moment!)}
-                            style={{
-                                marginTop: '6px',
-                                background: '#fff', 
-                                border: '1px solid #2c5282', 
-                                borderRadius: '15px',
-                                padding: '4px 10px', 
-                                fontSize: '0.8rem', 
-                                cursor: 'pointer',
-                                color: '#2c5282', 
-                                fontWeight: 'bold',
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                gap: '5px',
-                                width: '100%'
-                            }}
+                            className="mt-2 inline-flex items-center gap-2 px-3 py-1 text-xs font-bold text-swedish-blue border border-swedish-blue rounded-full bg-white hover:bg-blue-50 transition-colors"
                         >
                             <span>⏱ Aller à {formatTime(msg.moment)}</span>
                         </button>
@@ -190,76 +168,55 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
       </div>
 
       {/* Zone de saisie */}
-      <div style={{ borderTop: '1px solid #ccc', background: '#fff', padding: '10px' }}>
+      <div className="border-t border-swedish-grey bg-white p-3">
         
         {/* OPTIONS TIMECODE */}
-        <div style={{ marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
+        <div className="mb-3 flex items-center gap-3 flex-wrap">
             <button
                 type="button"
                 onClick={toggleTimeOption}
                 aria-pressed={includeTime}
-                style={{
-                    background: 'transparent',
-                    border: 'none',
-                    color: includeTime ? '#2c5282' : '#666',
-                    fontSize: '0.85rem',
-                    cursor: 'pointer',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '5px',
-                    fontWeight: includeTime ? 'bold' : 'normal'
-                }}
+                className={`
+                    flex items-center gap-2 text-sm transition-colors
+                    ${includeTime ? 'text-swedish-blue font-bold' : 'text-gray-500'}
+                `}
             >
-                <div style={{
-                    width: '16px', height: '16px', border: '1px solid #ccc', borderRadius:'3px',
-                    background: includeTime ? '#2c5282' : 'white',
-                    display:'flex', alignItems:'center', justifyContent:'center', color:'white', fontSize:'10px'
-                }}>
+                <div className={`
+                    w-4 h-4 border rounded flex items-center justify-center text-[10px]
+                    ${includeTime ? 'bg-swedish-blue border-swedish-blue text-white' : 'bg-white border-gray-300'}
+                `}>
                     {includeTime && '✓'}
                 </div>
                 Joindre un moment
             </button>
 
             {includeTime && (
-                <div style={{ display: 'flex', alignItems: 'center', gap: '3px', background: '#f0f0f0', padding: '4px 8px', borderRadius: '4px' }}>
-                    
-                    {/* INPUT HEURES */}
-                    <input 
-                        type="number" 
-                        value={manualHour}
-                        onChange={(e) => setManualHour(e.target.value)}
-                        placeholder="HH"
-                        aria-label="Heures"
-                        style={{ width: '35px', textAlign: 'center', border: '1px solid #ccc', borderRadius: '3px' }}
-                    />
-                    <span style={{ fontWeight:'bold', color:'#666' }}>:</span>
-
-                    {/* INPUT MINUTES */}
-                    <input 
-                        type="number" 
-                        value={manualMin}
-                        onChange={(e) => setManualMin(e.target.value)}
-                        placeholder="MM"
-                        aria-label="Minutes"
-                        style={{ width: '35px', textAlign: 'center', border: '1px solid #ccc', borderRadius: '3px' }}
-                    />
-                    <span style={{ fontWeight:'bold', color:'#666' }}>:</span>
-                    
-                    {/* INPUT SECONDES */}
-                    <input 
-                        type="number" 
-                        value={manualSec}
-                        onChange={(e) => setManualSec(e.target.value)}
-                        placeholder="SS"
-                        aria-label="Secondes"
-                        style={{ width: '35px', textAlign: 'center', border: '1px solid #ccc', borderRadius: '3px' }}
-                    />
+                <div className="flex items-center gap-1 bg-gray-100 p-1 rounded">
+                    {/* INPUTS HH:MM:SS */}
+                    {['HH', 'MM', 'SS'].map((placeholder, i) => {
+                        const val = i === 0 ? manualHour : i === 1 ? manualMin : manualSec;
+                        const setVal = i === 0 ? setManualHour : i === 1 ? setManualMin : setManualSec;
+                        
+                        return (
+                            <div key={placeholder} className="flex items-center">
+                                <input 
+                                    type="number" 
+                                    value={val}
+                                    onChange={(e) => setVal(e.target.value)}
+                                    placeholder={placeholder}
+                                    aria-label={placeholder}
+                                    className="w-10 text-center border border-gray-300 rounded text-sm p-0.5 focus:border-swedish-blue outline-none"
+                                />
+                                {i < 2 && <span className="font-bold text-gray-400 mx-1">:</span>}
+                            </div>
+                        )
+                    })}
 
                     <button 
                         type="button"
                         onClick={syncWithCurrentTime}
-                        title="Utiliser le temps actuel de la vidéo"
-                        style={{ marginLeft: '5px', cursor: 'pointer', background: 'none', border: 'none', fontSize: '1rem' }}
+                        title="Utiliser le temps actuel"
+                        className="ml-2 text-red-500 hover:text-red-700 text-lg leading-none"
                     >
                         📍
                     </button>
@@ -267,22 +224,23 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
             )}
         </div>
 
-        <form onSubmit={handleSendMessage} style={{ display: 'flex', gap: '10px' }}>
+        <form onSubmit={handleSendMessage} className="flex gap-2">
             <input
-            type="text"
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-            placeholder="Écrire un message..."
-            style={{ flex: 1, padding: '10px', borderRadius: '20px', border: '1px solid #ccc', outline: 'none' }}
+                type="text"
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+                placeholder="Écrire un message..."
+                className="flex-1 p-3 rounded-full border border-swedish-grey bg-gray-50 focus:bg-white focus:border-swedish-blue focus:ring-2 focus:ring-blue-100 outline-none transition-all"
             />
             <button 
                 type="submit" 
                 disabled={!inputText.trim()}
-                style={{ 
-                    background: inputText.trim() ? '#2c5282' : '#ccc', 
-                    color: 'white', border: 'none', borderRadius: '20px', padding: '8px 20px', fontWeight: 'bold', 
-                    cursor: inputText.trim() ? 'pointer' : 'not-allowed'
-                }}
+                className={`
+                    px-6 rounded-full font-bold text-white transition-all
+                    ${inputText.trim() 
+                        ? 'bg-swedish-blue hover:bg-opacity-90 cursor-pointer shadow-md' 
+                        : 'bg-gray-300 cursor-not-allowed'}
+                `}
             >
             Envoyer
             </button>
