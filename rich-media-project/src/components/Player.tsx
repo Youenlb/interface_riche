@@ -19,14 +19,14 @@ export default function Player({ videoUrl, subtitles, seekTime, onTimeUpdate }: 
   }, [seekTime]);
 
   return (
-    <div className="relative w-full bg-black rounded-lg overflow-hidden shadow-md">
+    <div className="relative w-full h-full bg-black rounded-lg overflow-hidden shadow-md">
       <video
         ref={videoRef}
         controls
         playsInline
         preload="metadata"
         crossOrigin="anonymous" 
-        className="w-full block"
+        className="w-full h-full object-contain"
         onTimeUpdate={(e) => onTimeUpdate(e.currentTarget.currentTime)}
       >
         <source src={videoUrl} type="video/webm" />

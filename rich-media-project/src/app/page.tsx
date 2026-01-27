@@ -20,7 +20,6 @@ export default function Home() {
 
   return (
     <>
-      {/* SKIP LINK ACCESSIBLE */}
       <a 
         href="#main-content" 
         className="absolute top-[-100px] left-0 bg-black text-white p-3 z-50 transition-all focus:top-0"
@@ -28,87 +27,84 @@ export default function Home() {
         Aller au contenu principal
       </a>
 
-      <div className="max-w-[1400px] mx-auto p-5">
+      {/* CONTAINER GLOBAL 
+          - Mobile : h-auto (scroll normal)
+          - Desktop (lg) : h-screen (tient dans l'écran) + overflow-hidden (pas de scroll page)
+      */}
+      <div className="w-full lg:h-screen lg:overflow-hidden flex flex-col bg-swedish-white">
         
-        {/* HEADER */}
-        <header role="banner" className="flex flex-wrap justify-between items-center mb-8 pb-5 border-b border-swedish-grey gap-4">
-          <div>
-            <h1 className="m-0 text-3xl font-bold text-swedish-charcoal">{LOCAL_DATA.film.title}</h1>
-            <p className="mt-1 text-gray-500 text-sm italic">Projet Rich Media - ENSSAT</p>
-          </div>
-          
-          <button 
-            onClick={() => setAdEnabled(!adEnabled)} 
-            aria-pressed={adEnabled}
-            className={`
-              px-6 py-3 rounded-full font-bold transition-colors border-2
-              ${adEnabled 
-                ? 'bg-swedish-blue text-white border-swedish-blue' 
-                : 'bg-swedish-cream text-swedish-charcoal border-transparent hover:bg-gray-200'}
-            `}
-          >
-            {adEnabled ? "Audio-Description : ON 🔈" : "Activer Audio-Description"}
-          </button>
-        </header>
-
-        {/* LAYOUT PRINCIPAL (Flexbox: Aside + Main) */}
-        <div className="flex flex-col md:flex-row gap-8 items-start">
-          
-          {/* ASIDE : Navigation (Chapitres) */}
-          <aside role="complementary" className="w-full md:w-1/4 bg-swedish-cream p-5 rounded-lg shadow-sm">
-            <Chapters 
-              data={LOCAL_DATA.chapters} 
-              onChapterClick={handleJump} 
-              currentTime={currentTime}
-            />
-          </aside>
-
-          {/* MAIN : Contenu principal */}
-          <main id="main-content" className="w-full md:w-3/4 flex flex-col gap-6" role="main">
-            
-            {/* 1. SECTION VIDÉO */}
-            <section aria-label="Lecteur vidéo" className="w-full shadow-lg rounded-lg overflow-hidden">
-              <Player 
-                videoUrl={LOCAL_DATA.film.file_url} 
-                subtitles={LOCAL_DATA.subtitles}
-                onTimeUpdate={setCurrentTime}
-                seekTime={seekTime}
-              />
-            </section>
-
-            <AudioDescriptionManager 
-              cues={LOCAL_DATA.audiodescription} 
-              currentTime={currentTime} 
-              isEnabled={adEnabled}
-            />
-
-            {/* 2. SECTION INTERACTIVE (Grille : Carte + Chat) */}
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              
-              {/* Carte à Gauche */}
-              <div className="h-[500px] flex flex-col">
-                <h2 className="text-xl font-bold text-swedish-blue mb-3">Lieux de tournage</h2>
-                <div className="flex-1 rounded-lg overflow-hidden border border-swedish-grey shadow-sm">
-                  <MapDisplay pois={LOCAL_DATA.poi} onPoiClick={handleJump} />
-                </div>
-              </div>
-
-              {/* Chat à Droite */}
-              <div className="h-[500px] flex flex-col">
-                <Chat 
-                  currentTime={currentTime}
-                  onTimestampClick={handleJump}
-                />
-              </div>
-
+        {/* --- ZONE HAUTE (Titre + Chapitres) --- 
+            flex-shrink-0 empêche cette zone d'être écrasée
+        */}
+        <div className="flex-shrink-0 p-4 pb-2 border-b border-gray-100">
+            <div className="flex justify-between items-center mb-3">
+              <h1 className="text-xl md:text-2xl font-bold text-swedish-blue m-0">{LOCAL_DATA.film.title}</h1>
+              <button 
+                  onClick={() => setAdEnabled(!adEnabled)} 
+                  className={`text-xs px-3 py-1 rounded-full font-bold border transition-colors ${adEnabled ? 'bg-swedish-sage text-white' : 'bg-gray-100 text-gray-700'}`}
+              >
+                {adEnabled ? "AD : ON" : "Activer AD"}
+              </button>
             </div>
-          </main>
+            
+            <Chapters 
+                data={LOCAL_DATA.chapters} 
+                onChapterClick={handleJump} 
+                currentTime={currentTime}
+            />
         </div>
 
-        {/* FOOTER */}
-        <footer role="contentinfo" className="mt-10 pt-5 text-center border-t border-swedish-grey text-gray-500 text-sm">
-          <p>© 2026 Projet Rich Media - Accessible selon RGAA</p>
-        </footer>
+        {/* --- ZONE PRINCIPALE (Grid) ---
+            flex-1 : Prend toute la hauteur restante
+            min-h-0 : Indispensable pour que le scroll interne fonctionne dans les enfants flex
+        */}
+        <main id="main-content" className="flex-1 min-h-0 p-4 pt-2 grid grid-cols-1 lg:grid-cols-4 gap-4">
+            
+            {/* COLONNE GAUCHE (Vidéo + Map) - 75% largeur */}
+            <div className="lg:col-span-3 flex flex-col gap-4 h-full min-h-0">
+                
+                {/* 1. VIDÉO (Moitié de la hauteur dispo) */}
+                <section aria-label="Lecteur vidéo" className="lg:h-1/2 w-full bg-black rounded-xl overflow-hidden shadow-lg flex-shrink-0 min-h-[250px]">
+                   <div className="h-full w-full flex items-center justify-center">
+                      <Player 
+                        videoUrl={LOCAL_DATA.film.file_url} 
+                        subtitles={LOCAL_DATA.subtitles}
+                        onTimeUpdate={setCurrentTime}
+                        seekTime={seekTime}
+                      />
+                   </div>
+                </section>
+
+                {/* 2. MAP (L'autre moitié) */}
+                <section aria-label="Carte interactive" className="lg:h-1/2 w-full rounded-xl overflow-hidden border border-swedish-grey shadow-md relative z-0 flex-shrink-0 min-h-[250px]">
+                    <div className="h-full w-full">
+                       <MapDisplay pois={LOCAL_DATA.poi} onPoiClick={handleJump} />
+                    </div>
+                </section>
+
+            </div>
+
+            {/* COLONNE DROITE (Chat) - 25% largeur */}
+            <div className="lg:col-span-1 h-full min-h-0">
+                {/* Desktop : h-full pour prendre toute la hauteur de la colonne
+                   Mobile : h-[500px] fixe pour être utilisable en fin de page
+                */}
+                <section className="h-[500px] lg:h-full flex flex-col">
+                   <Chat 
+                      currentTime={currentTime}
+                      onTimestampClick={handleJump}
+                   />
+                </section>
+            </div>
+
+        </main>
+
+        {/* Audio Manager (Invisible) */}
+        <AudioDescriptionManager 
+           cues={LOCAL_DATA.audiodescription} 
+           currentTime={currentTime} 
+           isEnabled={adEnabled}
+        />
       </div>
     </>
   );
