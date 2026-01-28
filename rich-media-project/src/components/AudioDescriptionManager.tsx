@@ -1,37 +1,47 @@
 'use client'
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { AudioDescEntry } from "@/app/types";
 import { parseTime } from "@/app/utils";
 
-export default function AudioDescriptionManager({ cues, currentTime, isEnabled }: { cues: AudioDescEntry[], currentTime: number, isEnabled: boolean }) {
-  const [lastReadIndex, setLastReadIndex] = useState(-1);
+interface Props {
+  cues: AudioDescEntry[];
+  currentTime: number;
+  isEnabled: boolean;
+}
+
+export default function AudioDescriptionManager({ cues, currentTime, isEnabled }: Props) {
+
+  const lastReadIndex = useRef(-1);
 
   useEffect(() => {
-    if (!isEnabled) {
-      window.speechSynthesis.cancel();
+    // Le '?' (optional chaining) évite que ça plante si l'API n'est pas dispo
+    const synth = globalThis.speechSynthesis;
+
+    if (!isEnabled || !synth) {
+      synth?.cancel();
       return;
     }
 
-    // On cherche si on est proche d'un timestamp (à 1 seconde près)
+    // On cherche si on est proche d'un timestamp (à 0.5 seconde près pour être précis)
     const cueIndex = cues.findIndex(c => {
         const cueTime = parseTime(c.timestamp);
-        return Math.abs(cueTime - currentTime) < 0.8;
+        return Math.abs(cueTime - currentTime) < 0.5;
     });
 
-    if (cueIndex !== -1 && cueIndex !== lastReadIndex) {
-      // On lit la version FR si dispo, sinon la version EN par défaut
+    // On compare avec lastReadIndex.current
+    if (cueIndex !== -1 && cueIndex !== lastReadIndex.current) {
       const textToRead = cues[cueIndex].description_fr || cues[cueIndex].description;
       
       const utterance = new SpeechSynthesisUtterance(textToRead);
       utterance.lang = "fr-FR";
       utterance.rate = 1.1; 
       
-      console.log(`Lecture Audio-Desc (${cues[cueIndex].timestamp}):`, textToRead);
-      window.speechSynthesis.speak(utterance);
+      // Lecture
+      synth.speak(utterance);
       
-      setLastReadIndex(cueIndex);
+      // Mise à jour de la référence (ne déclenche PAS de nouveau rendu)
+      lastReadIndex.current = cueIndex;
     }
-  }, [currentTime, isEnabled, cues, lastReadIndex]);
-
+  }, [currentTime, isEnabled, cues]); 
   return null;
 }
