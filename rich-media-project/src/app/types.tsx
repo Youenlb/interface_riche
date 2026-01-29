@@ -1,5 +1,3 @@
-// app/types.ts
-
 export interface FilmInfo {
   file_url: string;
   title: string;
@@ -16,7 +14,7 @@ export interface AudioDescEntry {
   scene: number;
   timestamp: string; // "HH:MM:SS"
   description: string;
-  description_fr?: string; // Optionnel car le 1er item n'en avait pas dans ton exemple, mais on va gérer
+  description_fr?: string;
   description_es?: string;
 }
 
@@ -35,17 +33,17 @@ export interface POIScene {
 
 export interface POIEntry {
   id: number;
-  title_fr: string; // ou "title" selon ton JSON exact, adapte si besoin
+  title_fr: string;
   latitude: number;
   longitude: number;
   description_fr: string;
-  timestamps?: POIScene[]; // <--- LE ? EST CRUCIAL ICI
+  timestamps?: POIScene[];
 }
 
 export interface ChatMessage {
   when: string;   // Timestamp Unix (ex: "1580742794")
   name: string;   // Auteur (ex: "Alice")
-  message: string; // Contenu
+  message: string;
   moment?: number; // Timestamp vidéo optionnel (en secondes)
 }
 export interface FilmData {

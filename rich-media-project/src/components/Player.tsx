@@ -3,10 +3,10 @@ import { useRef, useEffect } from "react";
 import { Subtitles } from "@/app/types";
 
 interface PlayerProps {
-  videoUrl: string;
-  subtitles: Subtitles;
-  seekTime?: number; 
-  onTimeUpdate: (t: number) => void;
+  readonly videoUrl: string;
+  readonly subtitles: Subtitles;
+  readonly seekTime?: number; 
+  readonly onTimeUpdate: (t: number) => void;
 }
 
 export default function Player({ videoUrl, subtitles, seekTime, onTimeUpdate }: PlayerProps) {
@@ -30,7 +30,13 @@ export default function Player({ videoUrl, subtitles, seekTime, onTimeUpdate }: 
         onTimeUpdate={(e) => onTimeUpdate(e.currentTarget.currentTime)}
       >
         <source src={videoUrl} type="video/webm" />
-        <track kind="subtitles" src={subtitles.fr} srcLang="fr" label="Français" default />
+        <track 
+            kind="captions" 
+            src={subtitles.fr} 
+            srcLang="fr" 
+            label="Français" 
+            default 
+        />
         <track kind="subtitles" src={subtitles.en} srcLang="en" label="English" />
         <track kind="subtitles" src={subtitles.es} srcLang="es" label="Español" />
         <p>Votre navigateur ne supporte pas la lecture vidéo HTML5.</p>

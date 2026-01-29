@@ -10,11 +10,17 @@ import iconMarker from 'leaflet/dist/images/marker-icon.png';
 import iconRetina from 'leaflet/dist/images/marker-icon-2x.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
-export default function MapDisplay({ pois, onPoiClick }: { pois: POIEntry[], onPoiClick: (t: number) => void }) {
+interface MapDisplayProps {
+  readonly pois: POIEntry[];
+  readonly onPoiClick: (t: number) => void;
+}
+
+export default function MapDisplay({ pois, onPoiClick }: MapDisplayProps) {
   const defaultCenter: [number, number] = [40.4406, -79.9959];
 
   const customIcon = useMemo(() => {
-    const getSrc = (img: any) => (typeof img === 'string' ? img : img.src);
+    const getSrc = (img: string | { src: string }) => (typeof img === 'string' ? img : img.src);
+    
     return L.icon({ 
         iconRetinaUrl: getSrc(iconRetina), 
         iconUrl: getSrc(iconMarker), 
@@ -26,14 +32,13 @@ export default function MapDisplay({ pois, onPoiClick }: { pois: POIEntry[], onP
   }, []);
 
   return (
-    // Utilisation de Tailwind pour la taille et les bordures
     <div className="h-full w-full rounded-2xl overflow-hidden border border-swedish-grey shadow-sm">
       <MapContainer center={defaultCenter} zoom={9} style={{ height: '100%', width: '100%' }}>
         <TileLayer 
             attribution='&copy; OpenStreetMap' 
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" 
         />
-        {pois && pois.map((poi) => (
+        {pois?.map((poi) => (
             <Marker key={poi.id} position={[poi.latitude, poi.longitude]} icon={customIcon}>
               <Popup>
                 <strong className="text-swedish-blue text-base">{poi.title_fr}</strong>
@@ -44,9 +49,9 @@ export default function MapDisplay({ pois, onPoiClick }: { pois: POIEntry[], onP
                     {poi.timestamps && poi.timestamps.length > 0 ? (
                         <>
                             <small className="font-bold text-gray-500 uppercase text-xs">Scènes clés :</small>
-                            {poi.timestamps.map((scene, idx) => (
+                            {poi.timestamps.map((scene) => (
                                 <button 
-                                    key={idx}
+                                    key={`${scene.time}-${scene.scene_fr}`}
                                     onClick={() => onPoiClick(parseTime(scene.time))}
                                     className="block w-full text-left bg-gray-50 border border-gray-200 rounded p-2 mt-1 hover:bg-blue-50 hover:border-blue-200 transition-colors"
                                 >

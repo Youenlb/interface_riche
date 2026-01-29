@@ -27,10 +27,7 @@ export default function Home() {
         Aller au contenu principal
       </a>
 
-      {/* FOND GLOBAL : Gris très clair pour un look moderne */}
       <div className="w-full lg:h-screen lg:overflow-hidden flex flex-col bg-gray-50 text-gray-900 font-sans">
-        
-        {/* ZONE HAUTE : Fond blanc pour détacher le header */}
         <div className="flex-shrink-0 p-4 pb-2 bg-white shadow-sm z-10 relative">
             <div className="flex justify-between items-center mb-4">
               <div>
@@ -58,14 +55,8 @@ export default function Home() {
                 currentTime={currentTime}
             />
         </div>
-
-        {/* ZONE PRINCIPALE */}
         <main id="main-content" className="flex-1 min-h-0 p-4 grid grid-cols-1 lg:grid-cols-4 gap-4 bg-gray-50">
-            
-            {/* COLONNE GAUCHE (Vidéo + Map) */}
             <div className="lg:col-span-3 flex flex-col gap-4 h-full min-h-0">
-                
-                {/* BLOC VIDÉO : Ombre portée plus douce, coins plus arrondis */}
                 <section aria-label="Lecteur vidéo" className="lg:h-1/2 w-full bg-black rounded-2xl overflow-hidden shadow-xl flex-shrink-0 min-h-[250px] ring-1 ring-black/10">
                    <div className="h-full w-full flex items-center justify-center">
                       <Player 
@@ -76,8 +67,6 @@ export default function Home() {
                       />
                    </div>
                 </section>
-
-                {/* BLOC MAP : Fond blanc propre, ombre douce, sans bordure grise moche */}
                 <section aria-label="Carte interactive" className="lg:h-1/2 w-full bg-white rounded-2xl overflow-hidden shadow-xl relative z-0 flex-shrink-0 min-h-[250px] ring-1 ring-black/5">
                     <div className="h-full w-full">
                        <MapDisplay pois={LOCAL_DATA.poi} onPoiClick={handleJump} />
@@ -85,8 +74,6 @@ export default function Home() {
                 </section>
 
             </div>
-
-            {/* COLONNE DROITE (Chat) */}
             <div className="lg:col-span-1 h-full min-h-0">
                 <section className="h-[500px] lg:h-full flex flex-col rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 bg-white">
                    <Chat 
