@@ -1,6 +1,7 @@
 'use client'
-import { useState } from "react";
-import { LOCAL_DATA } from "./data"; 
+import { useState, useEffect, useRef } from "react";
+import { fetchFilmData } from "./data"; 
+import { FilmData } from "./types";
 import Player from "@/components/Player";
 import AudioDescriptionManager from "@/components/AudioDescriptionManager";
 import Chapters from "@/components/Chapters";
@@ -10,13 +11,74 @@ import dynamic from 'next/dynamic';
 const MapDisplay = dynamic(() => import('@/components/MapDisplay'), { ssr: false });
 
 export default function Home() {
+  const [filmData, setFilmData] = useState<FilmData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
   const [seekTime, setSeekTime] = useState<number | undefined>(undefined);
   const [adEnabled, setAdEnabled] = useState(false);
+  
+  // Use ref to prevent multiple fetch calls
+  const hasLoadedRef = useRef(false);
+
+  useEffect(() => {
+    // Prevent double fetch in strict mode
+    if (hasLoadedRef.current) return;
+    hasLoadedRef.current = true;
+
+    const loadData = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchFilmData();
+        setFilmData(data);
+        setError(null);
+      } catch (err) {
+        setError("Erreur lors du chargement de la vidéo. Veuillez réessayer.");
+        setFilmData(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadData();
+  }, []);
 
   const handleJump = (time: number) => {
     setSeekTime(time);
+    // Reset seekTime after a short delay to allow the component to process it
+    setTimeout(() => {
+      setSeekTime(undefined);
+    }, 100);
   };
+
+  // Loading state
+  if (loading) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4"></div>
+          <p className="text-gray-600">Chargement de la vidéo...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error || !filmData) {
+    return (
+      <div className="w-full h-screen flex items-center justify-center bg-gray-50">
+        <div className="text-center">
+          <p className="text-red-600 font-semibold mb-4">{error || "Erreur lors du chargement"}</p>
+          <button 
+            onClick={() => globalThis.location.reload()}
+            className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700"
+          >
+            Réessayer
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -32,7 +94,7 @@ export default function Home() {
             <div className="flex justify-between items-center mb-4">
               <div>
                 <h1 className="text-xl md:text-2xl font-extrabold tracking-tight text-gray-900 m-0">
-                  {LOCAL_DATA.film.title}
+                  {filmData.film.title}
                 </h1>
               </div>
               
@@ -50,7 +112,7 @@ export default function Home() {
             </div>
             
             <Chapters 
-                data={LOCAL_DATA.chapters} 
+                data={filmData.chapters} 
                 onChapterClick={handleJump} 
                 currentTime={currentTime}
             />
@@ -60,8 +122,8 @@ export default function Home() {
                 <section aria-label="Lecteur vidéo" className="lg:h-1/2 w-full bg-black rounded-2xl overflow-hidden shadow-xl flex-shrink-0 min-h-[250px] ring-1 ring-black/10">
                    <div className="h-full w-full flex items-center justify-center">
                       <Player 
-                        videoUrl={LOCAL_DATA.film.file_url} 
-                        subtitles={LOCAL_DATA.subtitles}
+                        videoUrl={filmData.film.file_url} 
+                        subtitles={filmData.subtitles}
                         onTimeUpdate={setCurrentTime}
                         seekTime={seekTime}
                       />
@@ -69,7 +131,7 @@ export default function Home() {
                 </section>
                 <section aria-label="Carte interactive" className="lg:h-1/2 w-full bg-white rounded-2xl overflow-hidden shadow-xl relative z-0 flex-shrink-0 min-h-[250px] ring-1 ring-black/5">
                     <div className="h-full w-full">
-                       <MapDisplay pois={LOCAL_DATA.poi} onPoiClick={handleJump} />
+                       <MapDisplay pois={filmData.poi} onPoiClick={handleJump} />
                     </div>
                 </section>
 
@@ -86,7 +148,7 @@ export default function Home() {
         </main>
 
         <AudioDescriptionManager 
-           cues={LOCAL_DATA.audiodescription} 
+           cues={filmData.audiodescription} 
            currentTime={currentTime} 
            isEnabled={adEnabled}
         />

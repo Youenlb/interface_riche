@@ -18,6 +18,25 @@ export default function Player({ videoUrl, subtitles, seekTime, onTimeUpdate }: 
     }
   }, [seekTime]);
 
+  // Detect video type from URL
+  const getVideoType = (url: string | undefined): string => {
+    if (!url) return 'video/mp4';
+    if (url.includes('.mp4')) return 'video/mp4';
+    if (url.includes('.webm')) return 'video/webm';
+    if (url.includes('.mov')) return 'video/quicktime';
+    if (url.includes('.mkv')) return 'video/x-matroska';
+    // Default to mp4 or let browser handle it
+    return 'video/mp4';
+  };
+
+  if (!videoUrl) {
+    return (
+      <div className="w-full h-full bg-black rounded-lg overflow-hidden shadow-md flex items-center justify-center">
+        <p className="text-white">Chargement de la vidéo...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="relative w-full h-full bg-black rounded-lg overflow-hidden shadow-md">
       <video
@@ -25,11 +44,10 @@ export default function Player({ videoUrl, subtitles, seekTime, onTimeUpdate }: 
         controls
         playsInline
         preload="metadata"
-        crossOrigin="anonymous" 
         className="w-full h-full object-contain"
         onTimeUpdate={(e) => onTimeUpdate(e.currentTarget.currentTime)}
       >
-        <source src={videoUrl} type="video/webm" />
+        <source src={videoUrl} type={getVideoType(videoUrl)} />
         <track 
             kind="captions" 
             src={subtitles.fr} 
