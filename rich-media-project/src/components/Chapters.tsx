@@ -10,9 +10,12 @@ interface ChaptersProps {
 
 export default function Chapters({ data, onChapterClick, currentTime = 0 }: ChaptersProps) {
   return (
-    <nav aria-label="Chapitres du film" className="w-full">
-      <div className="flex flex-wrap gap-2 items-center">
-        <span className="text-sm font-bold text-gray-400 mr-2 uppercase tracking-wider">Chapitres</span>
+    <nav aria-label="Navigation par chapitres" className="w-full" role="navigation">
+      <h2 className="sr-only">Chapitres du film</h2>
+      <ul className="flex flex-wrap gap-2 items-center list-none p-0 m-0" role="list">
+        <li>
+          <span className="text-sm font-bold text-gray-500 mr-2 uppercase tracking-wider" aria-hidden="true">Chapitres</span>
+        </li>
         
         {data.map((chap, i) => {
           const seconds = parseTime(chap.timestamp);
@@ -20,29 +23,33 @@ export default function Chapters({ data, onChapterClick, currentTime = 0 }: Chap
           const isActive = currentTime >= seconds && currentTime < nextChapSeconds;
 
           return (
-            <button
-              key={chap.chapter}
-              onClick={() => onChapterClick(seconds)}
-              aria-current={isActive ? "step" : undefined}
-              className={`
-                flex items-center gap-2 
-                px-4 py-2 rounded-full text-xs md:text-sm transition-all duration-300 ease-in-out
-                font-medium ring-1 ring-inset
-                ${isActive 
-                  ? 'bg-indigo-600 text-white ring-indigo-600 shadow-md scale-105' 
-                  : 'bg-gray-100 text-gray-700 ring-transparent hover:bg-gray-200 hover:text-gray-900'}
-              `}
-            >
-              <span className={`font-mono text-[10px] opacity-80 ${isActive ? 'text-indigo-200' : 'text-gray-500'}`}>
-                {chap.timestamp}
-              </span>
-              <span>
-                {chap.title_fr}
-              </span>
-            </button>
+            <li key={chap.chapter}>
+              <button
+                onClick={() => onChapterClick(seconds)}
+                aria-current={isActive ? "step" : undefined}
+                aria-label={`Chapitre ${i + 1}: ${chap.title_fr}, commence à ${chap.timestamp}`}
+                title={`Aller au chapitre: ${chap.title_fr}`}
+                className={`
+                  flex items-center gap-2 
+                  px-4 py-2 rounded-full text-xs md:text-sm transition-all duration-300 ease-in-out
+                  font-medium ring-1 ring-inset
+                  focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:ring-offset-1
+                  ${isActive 
+                    ? 'bg-indigo-600 text-white ring-indigo-600 shadow-md scale-105' 
+                    : 'bg-gray-100 text-gray-700 ring-transparent hover:bg-gray-200 hover:text-gray-900'}
+                `}
+              >
+                <span className={`font-mono text-xs opacity-80 ${isActive ? 'text-indigo-200' : 'text-gray-500'}`} aria-hidden="true">
+                  {chap.timestamp}
+                </span>
+                <span>
+                  {chap.title_fr}
+                </span>
+              </button>
+            </li>
           );
         })}
-      </div>
+      </ul>
     </nav>
   );
 }

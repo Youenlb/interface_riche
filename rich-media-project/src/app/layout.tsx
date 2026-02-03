@@ -10,9 +10,7 @@ export default function RootLayout({ children }: { readonly children: React.Reac
   return (
     <html lang="fr"> 
       <body>
-        <main id="main-content">
-          {children}
-        </main>
+        {children}
       </body>
     </html>
   );

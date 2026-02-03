@@ -142,28 +142,31 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
     : 'bg-white border-gray-300';
 
   return (
-    <section aria-labelledby="chat-heading" className="flex flex-col h-full bg-white">
+    <div aria-labelledby="chat-heading" className="flex flex-col h-full bg-white">
       
       {/* HEADER */}
       <div className="px-5 py-3 bg-white border-b border-gray-100 flex justify-between items-center shadow-sm z-10">
-        <h2 id="chat-heading" className="m-0 text-lg text-gray-800 font-bold flex items-center gap-2">
-          <span className="relative flex h-3 w-3">
+        <h3 id="chat-heading" className="m-0 text-lg text-gray-800 font-bold flex items-center gap-2">
+          <span className="relative flex h-3 w-3" aria-hidden="true">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
           </span>
-          {' '}Chat
-        </h2>
+          <span className="sr-only">Chat en direct - </span>Chat
+          <span className="sr-only"> - {messages.length} messages</span>
+        </h3>
         
         <div className="flex items-center gap-2 bg-indigo-50 px-3 py-1.5 rounded-full border border-indigo-100 transition-colors focus-within:border-indigo-300 focus-within:ring-2 focus-within:ring-indigo-100">
-            <label htmlFor="pseudo-input" className="text-xs text-indigo-800 font-bold uppercase tracking-wider select-none">Moi :</label>
+            <label htmlFor="pseudo-input" className="text-sm text-indigo-800 font-bold uppercase tracking-wider select-none">Pseudo :</label>
             <input 
                 id="pseudo-input"
                 type="text" 
                 value={pseudo} 
                 onChange={(e) => setPseudo(e.target.value)} 
+                aria-describedby="pseudo-help"
                 className="w-20 bg-transparent text-sm font-bold text-indigo-700 focus:outline-none border-none focus:ring-0 transition-colors placeholder-indigo-300"
-                placeholder="Nom"
+                placeholder="Votre nom"
             />
+            <span id="pseudo-help" className="sr-only">Entrez votre pseudonyme pour le chat</span>
         </div>
       </div>
 
@@ -172,7 +175,11 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
         ref={scrollRef}
         role="log" 
         aria-live="polite"
-        className="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-4 scroll-smooth"
+        aria-label={`Historique des messages - ${messages.length} messages`}
+        aria-atomic="false"
+        aria-relevant="additions"
+        tabIndex={0}
+        className="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-4 scroll-smooth focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
       >
         {messages.map((msg, index) => {
             const isMe = msg.name === pseudo;
@@ -194,12 +201,15 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
                     {msg.moment !== undefined && (
                         <button 
                             onClick={() => onTimestampClick(msg.moment!)}
+                            aria-label={`Aller au moment ${formatTime(msg.moment)} dans la vidéo`}
                             className={`
                                 mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-full transition-all
+                                focus:outline-none focus:ring-2 focus:ring-offset-1 focus:ring-indigo-500
                                 ${getTimestampButtonClasses(isMe)}
                             `}
                         >
-                            <span>▶ Aller à {formatTime(msg.moment)}</span>
+                            <span aria-hidden="true">▶</span>
+                            <span>Aller à {formatTime(msg.moment)}</span>
                         </button>
                     )}
                 </div>
@@ -212,69 +222,87 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
       <div className="border-t border-gray-100 bg-white p-4 relative z-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.02)]">
         
         {/* BARRE D'OUTILS (TIMECODE) */}
-        <div className="mb-3 flex items-center gap-4 flex-wrap">
+        <fieldset className="mb-3 flex items-center gap-4 flex-wrap border-0 p-0 m-0">
+            <legend className="sr-only">Options de timecode</legend>
             <button
                 type="button"
                 onClick={toggleTimeOption}
                 aria-pressed={includeTime}
+                aria-expanded={includeTime}
+                aria-controls="timecode-inputs"
                 className={`
-                    flex items-center gap-2 text-xs font-bold transition-all px-2 py-1 rounded
+                    flex items-center gap-2 text-sm font-bold transition-all px-3 py-2 rounded
+                    focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1
                     ${timecodeToggleClasses}
                 `}
             >
-                <div className={`
-                    w-4 h-4 rounded border flex items-center justify-center text-[10px] transition-all
+                <span className={`
+                    w-5 h-5 rounded border flex items-center justify-center text-xs transition-all
                     ${timecodeIconClasses}
-                `}>
+                `} aria-hidden="true">
                     {includeTime && '✓'}
-                </div>
+                </span>
                 Joindre un timecode
             </button>
 
             {includeTime && (
-                <div className="flex items-center gap-1 animate-in fade-in slide-in-from-bottom-1 duration-200">
-                    {timeInputsConfig.map((input) => (
-                        <div key={input.label} className="relative group p-4">
+                <div id="timecode-inputs" className="flex items-center gap-2 animate-in fade-in slide-in-from-bottom-1 duration-200" role="group" aria-label="Saisie du timecode">
+                    {timeInputsConfig.map((input, idx) => (
+                        <div key={input.label} className="relative">
+                            <label htmlFor={`timecode-${input.label}`} className="sr-only">
+                                {input.label === 'HH' ? 'Heures' : input.label === 'MM' ? 'Minutes' : 'Secondes'}
+                            </label>
                             <input 
+                                id={`timecode-${input.label}`}
                                 type="number" 
+                                min="0"
+                                max={input.label === 'HH' ? '99' : '59'}
                                 value={input.value}
                                 onChange={(e) => input.setter(e.target.value)}
-                                placeholder={input.label}
-                                className="w-20 p-4 h-8 text-center bg-indigo-50 border border-indigo-100 rounded-md text-sm font-bold text-indigo-700 focus:border-indigo-300 focus:ring-2 focus:ring-indigo-100 outline-none transition-all placeholder-indigo-300 focus:outline-none"
+                                aria-label={input.label === 'HH' ? 'Heures' : input.label === 'MM' ? 'Minutes' : 'Secondes'}
+                                className="w-16 p-2 h-10 text-center bg-indigo-50 border border-indigo-100 rounded-md text-sm font-bold text-indigo-700 focus:border-indigo-300 focus:ring-2 focus:ring-indigo-300 outline-none transition-all placeholder-indigo-300"
                             />
+                            {idx < timeInputsConfig.length - 1 && <span className="absolute -right-1.5 top-1/2 -translate-y-1/2 text-gray-400 font-bold" aria-hidden="true">:</span>}
                         </div>
                     ))}
                 </div>
             )}
-        </div>
+        </fieldset>
 
         {/* INPUT MESSAGE & SEND */}
-        <form onSubmit={handleSendMessage} className="flex gap-3 items-center">
+        <form onSubmit={handleSendMessage} className="flex gap-3 items-center" aria-label="Formulaire d'envoi de message">
             <div className="flex-1 relative">
+                <label htmlFor="chat-message-input" className="sr-only">Message à envoyer</label>
                 <input
+                    id="chat-message-input"
                     type="text"
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
                     placeholder="Écrivez votre message..."
-                    className="w-full pl-5 pr-4 py-3 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-900 placeholder-indigo-300 focus:bg-white focus:border-indigo-400 focus:ring-4 focus:ring-indigo-100 outline-none transition-all shadow-inner font-medium focus:outline-none"
+                    aria-describedby="message-help"
+                    autoComplete="off"
+                    className="w-full pl-5 pr-4 py-3 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-900 placeholder-indigo-400 focus:bg-white focus:border-indigo-400 focus:ring-4 focus:ring-indigo-200 outline-none transition-all shadow-inner font-medium"
                 />
+                <span id="message-help" className="sr-only">Appuyez sur Entrée ou cliquez sur Envoyer pour publier votre message</span>
             </div>
             
             <button 
                 type="submit" 
                 disabled={!inputText.trim()}
+                aria-label={inputText.trim() ? "Envoyer le message" : "Entrez un message pour envoyer"}
+                aria-disabled={!inputText.trim()}
                 className={`
                     w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200 transform
+                    focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:ring-offset-2
                     ${getSendButtonClasses(inputText)}
                 `}
-                aria-label="Envoyer"
             >
-               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 ml-0.5">
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5 ml-0.5" aria-hidden="true">
                   <path d="M3.478 2.405a.75.75 0 00-.926.94l2.432 7.905H13.5a.75.75 0 010 1.5H4.984l-2.432 7.905a.75.75 0 00.926.94 60.519 60.519 0 0018.445-8.986.75.75 0 000-1.218A60.517 60.517 0 003.478 2.405z" />
                 </svg>
             </button>
         </form>
       </div>
-    </section>
+    </div>
   );
 }
