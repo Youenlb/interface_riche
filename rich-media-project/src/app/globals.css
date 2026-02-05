@@ -2,15 +2,64 @@
 @tailwind components;
 @tailwind utilities;
 
-/* --- ACCESSIBILITÉ CLAVIER (Pilier "Opérable") --- */
-/* On force un outline visible pour la navigation au clavier */
+/* --- Focus visible --- */
 :focus-visible {
-  outline: 3px solid #d35400; /* Orange visible */
+  outline: 3px solid #1e40af;
   outline-offset: 2px;
+  border-radius: 2px;
 }
 
+/* --- Screen reader only --- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* --- Reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --- High contrast mode --- */
+@media (prefers-contrast: more) {
+  a {
+    text-decoration-thickness: 2px;
+  }
+  
+  button, 
+  [role="button"] {
+    border: 2px solid currentColor;
+  }
+}
+
+/* --- Body --- */
 body {
-  /* On applique la couleur de fond et la police par défaut via Tailwind dans layout.tsx,
-     mais on peut le forcer ici si besoin */
   @apply bg-swedish-white text-swedish-charcoal font-sans;
+}
+
+/* --- Touch targets (mobile) --- */
+@media (pointer: coarse) {
+  button,
+  [role="button"],
+  a,
+  input,
+  select,
+  textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
