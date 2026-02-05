@@ -75,7 +75,7 @@ export default function Player({ videoUrl, subtitles, seekTime, onTimeUpdate, fi
             label="Subtítulos en español" 
         />
         <p>Votre navigateur ne supporte pas la lecture vidéo HTML5. 
-           <a href={videoUrl} className="text-indigo-400 underline">Télécharger la vidéo</a>
+           <a href={videoUrl} className="text-indigo-400 underline focus:outline-none focus:ring-2 focus:ring-indigo-300" download>Télécharger la vidéo (format {videoUrl?.split('.').pop() || 'vidéo'})</a>
         </p>
       </video>
     </div>

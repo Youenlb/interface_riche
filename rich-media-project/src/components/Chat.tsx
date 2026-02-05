@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from "react";
 import { ChatMessage } from "@/app/types";
 import { formatTime, formatMessageDate } from "@/app/utils";
 
-// --- LOGIQUE MÉTIER & STYLES (Définis ici pour tout garder dans le même fichier) ---
+// --- LOGIQUE MÉTIER & STYLES ---
 
 const processBulkMessages = (prev: ChatMessage[], newMsgs: ChatMessage[]) => {
   const combined = [...prev, ...newMsgs];
@@ -64,7 +64,6 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
   // 1. Connexion WebSocket
   useEffect(() => {
     ws.current = new WebSocket("wss://tp-iai3.cleverapps.io");
-    ws.current.onopen = () => console.log("✅ Connecté au Chat WS");
     ws.current.onmessage = (event) => {
       try {
         const data = JSON.parse(event.data);
@@ -147,12 +146,12 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
       {/* HEADER */}
       <div className="px-5 py-3 bg-white border-b border-gray-100 flex justify-between items-center shadow-sm z-10">
         <h3 id="chat-heading" className="m-0 text-lg text-gray-800 font-bold flex items-center gap-2">
-          <span className="relative flex h-3 w-3" aria-hidden="true">
+          <span className="relative flex h-3 w-3" aria-hidden="true" title="Connecté">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
           </span>
-          <span className="sr-only">Chat en direct - </span>Chat
-          <span className="sr-only"> - {messages.length} messages</span>
+          <span aria-hidden="true">Chat</span>
+          <span className="sr-only">Chat en direct - Connecté - {messages.length} messages dans l&apos;historique</span>
         </h3>
         
         <div className="flex items-center gap-2 bg-indigo-50 px-3 py-1.5 rounded-full border border-indigo-100 transition-colors focus-within:border-indigo-300 focus-within:ring-2 focus-within:ring-indigo-100">
@@ -175,12 +174,14 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
         ref={scrollRef}
         role="log" 
         aria-live="polite"
-        aria-label={`Historique des messages - ${messages.length} messages`}
+        aria-label={`Historique de la discussion - ${messages.length} messages`}
         aria-atomic="false"
-        aria-relevant="additions"
+        aria-relevant="additions text"
+        aria-describedby="chat-instructions"
         tabIndex={0}
         className="flex-1 overflow-y-auto p-4 bg-gray-50 space-y-4 scroll-smooth focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
       >
+        <p id="chat-instructions" className="sr-only">Les nouveaux messages seront annoncés automatiquement. Utilisez les flèches pour naviguer dans l&apos;historique.</p>
         {messages.map((msg, index) => {
             const isMe = msg.name === pseudo;
             const messageKey = `${msg.when}-${msg.name}-${index}`; 
@@ -272,7 +273,7 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
         {/* INPUT MESSAGE & SEND */}
         <form onSubmit={handleSendMessage} className="flex gap-3 items-center" aria-label="Formulaire d'envoi de message">
             <div className="flex-1 relative">
-                <label htmlFor="chat-message-input" className="sr-only">Message à envoyer</label>
+                <label htmlFor="chat-message-input" className="sr-only">Votre message</label>
                 <input
                     id="chat-message-input"
                     type="text"
@@ -280,10 +281,11 @@ export default function Chat({ currentTime, onTimestampClick }: ChatProps) {
                     onChange={(e) => setInputText(e.target.value)}
                     placeholder="Écrivez votre message..."
                     aria-describedby="message-help"
+                    aria-required="true"
                     autoComplete="off"
                     className="w-full pl-5 pr-4 py-3 rounded-full bg-indigo-50 border border-indigo-100 text-indigo-900 placeholder-indigo-400 focus:bg-white focus:border-indigo-400 focus:ring-4 focus:ring-indigo-200 outline-none transition-all shadow-inner font-medium"
                 />
-                <span id="message-help" className="sr-only">Appuyez sur Entrée ou cliquez sur Envoyer pour publier votre message</span>
+                <span id="message-help" className="sr-only">Champ obligatoire. Appuyez sur Entrée ou cliquez sur le bouton Envoyer pour publier votre message.</span>
             </div>
             
             <button 

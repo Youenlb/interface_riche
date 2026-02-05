@@ -9,10 +9,17 @@ interface ChaptersProps {
 }
 
 export default function Chapters({ data, onChapterClick, currentTime = 0 }: ChaptersProps) {
+  // Trouver le chapitre actif pour l'annoncer
+  const activeChapterIndex = data.findIndex((chap, i) => {
+    const seconds = parseTime(chap.timestamp);
+    const nextChapSeconds = i < data.length - 1 ? parseTime(data[i+1].timestamp) : Infinity;
+    return currentTime >= seconds && currentTime < nextChapSeconds;
+  });
+
   return (
-    <nav aria-label="Navigation par chapitres" className="w-full" role="navigation">
-      <h2 className="sr-only">Chapitres du film</h2>
-      <ul className="flex flex-wrap gap-2 items-center list-none p-0 m-0" role="list">
+    <nav aria-label="Navigation par chapitres du film" className="w-full" role="navigation">
+      <h2 className="sr-only">Chapitres du film - {data.length} chapitres disponibles. {activeChapterIndex >= 0 ? `Chapitre actuel : ${data[activeChapterIndex].title_fr}` : ''}</h2>
+      <ul className="flex flex-wrap gap-2 items-center list-none p-0 m-0" role="list" aria-label="Liste des chapitres">
         <li>
           <span className="text-sm font-bold text-gray-500 mr-2 uppercase tracking-wider" aria-hidden="true">Chapitres</span>
         </li>

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import { AudioDescEntry } from "@/app/types";
 import { parseTime } from "@/app/utils";
 
@@ -11,14 +11,20 @@ interface Props {
 
 export default function AudioDescriptionManager({ cues, currentTime, isEnabled }: Props) {
   const lastReadIndex = useRef(-1);
-  const [currentDescription, setCurrentDescription] = useState<string | null>(null);
+  const descriptionElementRef = useRef<HTMLParagraphElement>(null);
+
+  const updateDescription = useCallback((text: string | null) => {
+    if (descriptionElementRef.current) {
+      descriptionElementRef.current.textContent = text ? `Audiodescription : ${text}` : "";
+    }
+  }, []);
 
   useEffect(() => {
     const synth = globalThis.speechSynthesis;
 
     if (!isEnabled || !synth) {
       synth?.cancel();
-      setCurrentDescription(null);
+      updateDescription(null);
       return;
     }
 
@@ -32,8 +38,8 @@ export default function AudioDescriptionManager({ cues, currentTime, isEnabled }
     if (cueIndex !== -1 && cueIndex !== lastReadIndex.current) {
       const textToRead = cues[cueIndex].description_fr || cues[cueIndex].description;
       
-      // Mise à jour pour l'affichage visuel
-      setCurrentDescription(textToRead);
+      // Mise à jour de l'élément DOM directement (pas de setState)
+      updateDescription(textToRead);
       
       const utterance = new SpeechSynthesisUtterance(textToRead);
       utterance.lang = "fr-FR";
@@ -41,7 +47,7 @@ export default function AudioDescriptionManager({ cues, currentTime, isEnabled }
       
       // Effacer la description après la lecture
       utterance.onend = () => {
-        setCurrentDescription(null);
+        updateDescription(null);
       };
       
       // Lecture
@@ -50,34 +56,23 @@ export default function AudioDescriptionManager({ cues, currentTime, isEnabled }
       // Mise à jour de la référence
       lastReadIndex.current = cueIndex;
     }
-  }, [currentTime, isEnabled, cues]); 
+  }, [currentTime, isEnabled, cues, updateDescription]); 
 
-  // Rendu d'un élément accessible pour annoncer les descriptions
   return (
     <>
-      {/* Zone d'annonce pour lecteurs d'écran */}
+      {/* Zone d'annonce pour lecteurs d'écran - role=status car non intrusif */}
       <div 
         role="status" 
         aria-live="polite" 
         aria-atomic="true"
+        aria-label="Zone d'audiodescription"
         className="sr-only"
       >
-        {isEnabled && currentDescription && (
-          <span>Audiodescription: {currentDescription}</span>
+        <p ref={descriptionElementRef}></p>
+        {!isEnabled && (
+          <span>Audiodescription désactivée</span>
         )}
       </div>
-      
-      {/* Affichage visuel optionnel de l'audiodescription */}
-      {isEnabled && currentDescription && (
-        <div 
-          className="fixed bottom-4 left-1/2 -translate-x-1/2 bg-black/90 text-white px-6 py-3 rounded-lg shadow-2xl max-w-2xl text-center z-50 animate-in fade-in duration-300"
-          role="alert"
-          aria-live="assertive"
-        >
-          <span className="text-indigo-400 font-bold text-xs uppercase tracking-wider block mb-1">🔊 Audiodescription</span>
-          <p className="m-0 text-sm leading-relaxed">{currentDescription}</p>
-        </div>
-      )}
     </>
   );
 }

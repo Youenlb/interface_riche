@@ -58,7 +58,8 @@ export default function MapDisplay({ pois, onPoiClick }: MapDisplayProps) {
   return (
     <div 
       className="h-full w-full rounded-2xl overflow-hidden border border-swedish-grey shadow-sm relative"
-      role="application"
+      role="region"
+      aria-roledescription="Carte interactive"
       aria-label="Carte interactive des lieux du film"
       aria-describedby="map-description"
     >
@@ -68,10 +69,12 @@ export default function MapDisplay({ pois, onPoiClick }: MapDisplayProps) {
         Utilisez les marqueurs pour découvrir les scènes associées à chaque lieu.
       </div>
       
-      {/* Liste accessible des POIs (alternative à la carte) */}
       <details className="absolute top-2 right-2 z-[1000] bg-white rounded-lg shadow-lg max-w-[250px]">
-        <summary className="px-3 py-2 cursor-pointer text-sm font-semibold text-gray-700 hover:bg-gray-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500">
-          📍 Liste des lieux ({pois?.length || 0})
+        <summary 
+          className="px-3 py-2 cursor-pointer text-sm font-semibold text-gray-700 hover:bg-gray-50 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          aria-label={`Liste des ${pois?.length || 0} lieux de tournage - cliquez pour ouvrir`}
+        >
+          <span aria-hidden="true">📍</span> Liste des lieux ({pois?.length || 0})
         </summary>
         <ul className="p-2 max-h-[200px] overflow-y-auto list-none m-0" role="list">
           {pois?.map((poi) => (

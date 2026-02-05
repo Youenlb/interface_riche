@@ -32,7 +32,7 @@ export default function Home() {
         const data = await fetchFilmData();
         setFilmData(data);
         setError(null);
-      } catch (err) {
+      } catch {
         setError("Erreur lors du chargement de la vidéo. Veuillez réessayer.");
         setFilmData(null);
       } finally {
@@ -54,9 +54,9 @@ export default function Home() {
   // Loading state
   if (loading) {
     return (
-      <div className="w-full h-screen flex items-center justify-center bg-gray-50">
+      <div className="w-full h-screen flex items-center justify-center bg-gray-50" role="status" aria-live="polite" aria-busy="true">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4"></div>
+          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4" role="progressbar" aria-label="Chargement en cours"></div>
           <p className="text-gray-600">Chargement de la vidéo...</p>
         </div>
       </div>
@@ -66,12 +66,12 @@ export default function Home() {
   // Error state
   if (error || !filmData) {
     return (
-      <div className="w-full h-screen flex items-center justify-center bg-gray-50">
+      <div className="w-full h-screen flex items-center justify-center bg-gray-50" role="alert" aria-live="assertive">
         <div className="text-center">
           <p className="text-red-600 font-semibold mb-4">{error || "Erreur lors du chargement"}</p>
           <button 
             onClick={() => globalThis.location.reload()}
-            className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700"
+            className="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 focus:ring-offset-2"
           >
             Réessayer
           </button>
@@ -82,7 +82,6 @@ export default function Home() {
 
   return (
     <>
-      {/* Liens d'évitement - Accessibilité RGAA (critère 12.7) */}
       <nav aria-label="Accès rapide" className="absolute">
         <a 
           href="#main-content" 
@@ -109,7 +108,7 @@ export default function Home() {
               </div>
               
               <button 
-                  onClick={() => setAdEnabled(!adEnabled)}}
+                  onClick={() => setAdEnabled(!adEnabled)}
                   aria-pressed={adEnabled}
                   aria-label={adEnabled ? "Désactiver l'audiodescription" : "Activer l'audiodescription"}
                   className={`
